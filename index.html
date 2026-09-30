@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Walquíria Meireles | Portfólio UGC Creator</title>
 <meta name="description" content="Walquíria Meireles, UGC Creator em Brasília. Vídeos, fotos e unboxing para marcas de beleza, moda, casa e decoração, pet e tech.">
-<meta name="theme-color" content="#1f5c43">
+<meta name="theme-color" content="#6F4E37">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Yellowtail&display=swap" rel="stylesheet">
@@ -14,18 +14,18 @@
    PALETA E BASE (Boutique vintage)
    ========================================================= */
 :root{
-  --verde:#1f5c43;
-  --verde-escuro:#153f2e;
-  --rosa:#e89ab8;
-  --rosa-claro:#f7dbe6;
+  --verde:#6F4E37;
+  --verde-escuro:#4A3324;
+  --rosa:#D2691E;
+  --rosa-claro:#F6D9C4;
   --creme:#f6f0de;
   --creme-claro:#fbf7ea;
   --dourado:#c9a24a;
   --dourado-texto:#7a5c16; /* dourado escurecido para texto pequeno com bom contraste */
-  --tinta:#1d2b24;
-  --tinta-suave:#3f4a44;
+  --tinta:#2B1E16;
+  --tinta-suave:#5A4A3F;
   --raio:18px;
-  --sombra:0 18px 40px -22px rgba(21,63,46,.45);
+  --sombra:0 18px 40px -22px rgba(74,51,36,.45);
   --topo:74px;
   --serifa:"Fraunces", Georgia, "Times New Roman", serif;
   --manuscrita:"Yellowtail", "Brush Script MT", cursive;
@@ -91,7 +91,7 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
   position:relative;display:grid;place-items:center;overflow:hidden;
   background:
     repeating-linear-gradient(45deg,rgba(255,255,255,.10) 0 2px,transparent 2px 14px),
-    linear-gradient(160deg,var(--rosa) 0%,#f2c6d6 45%,var(--creme-claro) 100%);
+    linear-gradient(160deg,var(--rosa) 0%,#E9A877 45%,var(--creme-claro) 100%);
 }
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ph-legenda{
@@ -112,7 +112,7 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
   border-bottom:1px solid rgba(201,162,74,.55);
   transition:box-shadow .3s ease;
 }
-.topo.rolou{box-shadow:0 10px 30px -20px rgba(21,63,46,.6)}
+.topo.rolou{box-shadow:0 10px 30px -20px rgba(74,51,36,.6)}
 .topo .conteiner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .logo{font-family:var(--manuscrita);font-size:1.9rem;color:var(--verde);text-decoration:none;line-height:1;white-space:nowrap}
 .menu ul{list-style:none;margin:0;padding:0;display:flex;gap:clamp(14px,2.2vw,30px)}
@@ -147,7 +147,7 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
   .menu{
     position:fixed;left:0;right:0;top:var(--topo);
     background:var(--creme);border-bottom:1px solid var(--dourado);
-    box-shadow:0 20px 40px -24px rgba(21,63,46,.6);
+    box-shadow:0 20px 40px -24px rgba(74,51,36,.6);
     max-height:0;overflow:hidden;visibility:hidden;
     transition:max-height .35s ease, visibility .35s;
   }
@@ -245,7 +245,7 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 .sobre-foto{position:relative;max-width:400px;width:100%;justify-self:center}
 .sobre-foto .moldura-arco .ph{background:
   repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 2px,transparent 2px 14px),
-  linear-gradient(170deg,var(--verde) 0%,#4f8a6f 50%,var(--rosa) 100%)}
+  linear-gradient(170deg,var(--verde) 0%,#8F6A4E 50%,var(--rosa) 100%)}
 .etiqueta{
   position:absolute;right:-12px;top:36px;background:var(--rosa);color:var(--tinta);
   font-family:var(--manuscrita);font-size:1.5rem;padding:.2em .9em .3em;
@@ -277,14 +277,14 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 /* =========================================================
    3. CONTEÚDOS DE DESTAQUE
    ========================================================= */
-.destaques{background:linear-gradient(180deg,transparent,rgba(247,219,230,.55) 30%,rgba(247,219,230,.55) 70%,transparent)}
+.destaques{background:linear-gradient(180deg,transparent,rgba(246,217,196,.55) 30%,rgba(246,217,196,.55) 70%,transparent)}
 .destaques-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,36px);align-items:start}
 .destaque{
   display:block;text-decoration:none;color:inherit;background:var(--creme-claro);
   border:1.5px solid var(--dourado);border-radius:26px;padding:14px 14px 24px;
   box-shadow:var(--sombra);transition:transform .35s ease, box-shadow .35s ease;
 }
-.destaque:hover{transform:translateY(-6px);box-shadow:0 26px 50px -24px rgba(21,63,46,.55)}
+.destaque:hover{transform:translateY(-6px);box-shadow:0 26px 50px -24px rgba(74,51,36,.55)}
 .destaque:nth-child(2){background:var(--verde);color:var(--creme)}
 .destaque-capa{aspect-ratio:9/16;border-radius:18px}
 .destaque:nth-child(2) .destaque-capa{background:
@@ -292,7 +292,7 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
   linear-gradient(170deg,var(--dourado) 0%,#e7cf93 50%,var(--creme-claro) 100%)}
 .destaque:nth-child(3) .destaque-capa{background:
   repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 2px,transparent 2px 14px),
-  linear-gradient(170deg,#3f7b60 0%,var(--rosa) 70%,var(--creme-claro) 100%)}
+  linear-gradient(170deg,#7E5A40 0%,var(--rosa) 70%,var(--creme-claro) 100%)}
 .play{
   position:absolute;z-index:2;width:74px;height:74px;border-radius:50%;
   background:var(--creme-claro);display:grid;place-items:center;
@@ -344,11 +344,11 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
   .item-trab.entrando{animation:aparece .45s ease both}
 }
 @keyframes aparece{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
-.nicho-beleza .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.1) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--rosa),#f6d3df 60%,var(--creme-claro))}
-.nicho-moda .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.1) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--verde),#6f9c86 55%,var(--rosa))}
+.nicho-beleza .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.1) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--rosa),#EFC3A2 60%,var(--creme-claro))}
+.nicho-moda .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.1) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--verde),#9C7A60 55%,var(--rosa))}
 .nicho-casa .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.1) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--dourado),#ead9ad 60%,var(--creme-claro))}
 .nicho-pet .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.1) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--rosa),#e9c79a 60%,var(--dourado))}
-.nicho-tech .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--verde-escuro),var(--verde) 55%,#8fb3a1)}
+.nicho-tech .ph{background:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 2px,transparent 2px 14px),linear-gradient(160deg,var(--verde-escuro),var(--verde) 55%,#B39680)}
 
 /* =========================================================
    5. COMO EU TE AJUDO
@@ -377,7 +377,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
   background:radial-gradient(circle at 20px 24px,var(--verde) 19.5px,transparent 20.5px) 0 0/40px 24px repeat-x;
 }
 .metricas{list-style:none;margin:0 0 72px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.metrica{text-align:center;padding:24px 12px;border:1px solid rgba(201,162,74,.6);border-radius:20px;background:rgba(21,63,46,.4)}
+.metrica{text-align:center;padding:24px 12px;border:1px solid rgba(201,162,74,.6);border-radius:20px;background:rgba(74,51,36,.4)}
 .metrica strong{display:block;font-size:clamp(2.6rem,5vw,3.8rem);line-height:1;font-weight:600;color:var(--creme);font-variation-settings:"SOFT" 100}
 .metrica span{display:block;margin-top:.5em;font-size:.95rem}
 .bloco-rotulo{font-family:var(--manuscrita);font-size:clamp(1.7rem,3.4vw,2.2rem);color:var(--rosa);text-align:center;margin:0 0 24px}
@@ -428,7 +428,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
   transition:border-color .2s ease, box-shadow .2s ease;
 }
 .campo textarea{min-height:140px;resize:vertical}
-.campo input:focus,.campo textarea:focus{outline:none;border-color:var(--verde);box-shadow:0 0 0 4px rgba(31,92,67,.18)}
+.campo input:focus,.campo textarea:focus{outline:none;border-color:var(--verde);box-shadow:0 0 0 4px rgba(111,78,55,.18)}
 .cartao-form .botao{width:100%;position:relative}
 .confirmacao{
   text-align:center;padding:24px 8px;position:relative;
@@ -456,7 +456,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
    CARD DE CAPTURA (mídia kit)
    ========================================================= */
 .modal-fundo{
-  position:fixed;inset:0;z-index:300;background:rgba(21,43,34,.72);
+  position:fixed;inset:0;z-index:300;background:rgba(43,30,22,.72);
   display:grid;place-items:center;padding:16px;
   opacity:0;visibility:hidden;transition:opacity .35s ease, visibility .35s;
 }
@@ -559,7 +559,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
                 <textPath href="#circulo">UGC CREATOR ✦ BRASÍLIA ✦ FEITO COM CARINHO ✦</textPath>
               </text>
             </g>
-            <text x="70" y="84" text-anchor="middle" fill="#e89ab8" font-size="40" font-family="Yellowtail, cursive">W</text>
+            <text x="70" y="84" text-anchor="middle" fill="#D2691E" font-size="40" font-family="Yellowtail, cursive">W</text>
           </svg>
         </div>
         <span class="estrela-deco" aria-hidden="true">✦</span>
