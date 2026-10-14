@@ -232,12 +232,19 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 /* faixa de marcas */
 .faixa-marcas{
   background:var(--verde);color:var(--creme);overflow:hidden;
-  border-block:3px double var(--dourado);padding:14px 0;
+  border-block:3px double var(--dourado);padding:10px 0;
 }
 .faixa-trilho{display:flex;width:max-content}
 .faixa-lista{display:flex;align-items:center;list-style:none;margin:0;padding:0}
 .faixa-lista li{display:flex;align-items:center;white-space:nowrap;font-style:italic;font-size:1.15rem;letter-spacing:.02em}
-.faixa-lista li::after{content:"✦";color:var(--dourado);font-style:normal;font-size:.8rem;margin:0 28px}
+.faixa-lista li::after{content:"✦";color:var(--dourado);font-style:normal;font-size:.7rem;margin:0 18px}
+/* logos nas cores originais, cada uma numa plaquinha do mesmo tamanho (fica simétrico);
+   a cor da plaquinha é creme, ou a cor de fundo da própria marca quando a logo é clara */
+.placa-marca{
+  width:118px;height:42px;border-radius:11px;display:grid;place-items:center;flex:none;
+  background:var(--fundo-placa,var(--creme-claro));box-shadow:0 0 0 1.5px var(--dourado);
+}
+.logo-marca{display:block;height:28px;width:auto}
 @media (prefers-reduced-motion:no-preference){
   .faixa-trilho{animation:desliza 38s linear infinite}
   .faixa-marcas:hover .faixa-trilho{animation-play-state:paused}
@@ -612,7 +619,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
       </div>
     </div>
 
-    <!-- Faixa de marcas: os nomes vêm do array MARCAS no script -->
+    <!-- Faixa de marcas: as logos vêm do array MARCAS no script -->
     <div class="faixa-marcas" aria-label="Marcas com quem já trabalhei">
       <div class="faixa-trilho">
         <ul class="faixa-lista" id="faixa-lista"></ul>
@@ -818,11 +825,28 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
    SEUS DADOS: edite só esta parte para mudar o conteúdo do site
    ========================================================= */
 
-/* MARCAS da faixa da capa. Troque "Marca 05" a "Marca 12" pelos nomes reais (ou apague). */
+/* MARCAS da faixa da capa: as logos ficam na pasta "logos", nas cores originais,
+   cada uma numa plaquinha creme do mesmo tamanho.
+   fundo: cor da plaquinha quando a logo é clara e some no creme (use a cor de fundo da marca).
+   Para incluir uma marca: coloque a logo (de preferência com fundo transparente) na pasta e
+   acrescente uma linha. Sem logo (logo: ''), aparece o nome escrito. */
 const MARCAS = [
-  'Deliriyou', 'Magalu', 'Disney', 'PetLove',
-  'Marca 05', 'Marca 06', 'Marca 07', 'Marca 08',
-  'Marca 09', 'Marca 10', 'Marca 11', 'Marca 12'
+  { nome: 'Deliriyou',             logo: 'logos/deliriyou.svg',            fundo: '#2B1E16' },
+  { nome: 'Magalu',                logo: 'logos/magalu.svg' },
+  { nome: 'TIM',                   logo: 'logos/tim.svg' },
+  { nome: 'Eudora Siàge',          logo: 'logos/eudora.png',               fundo: '#613B54' },
+  { nome: 'Pantene',               logo: 'logos/pantene.svg' },
+  { nome: "L'Oréal Professionnel", logo: 'logos/loreal-professionnel.png', fundo: '#000000' },
+  { nome: 'Dove',                  logo: 'logos/dove.svg' },
+  { nome: 'Garnier',               logo: 'logos/garnier.svg' },
+  { nome: 'Coala',                 logo: 'logos/coala.png' },
+  { nome: 'Ruby Rose',             logo: 'logos/ruby-rose.png' },
+  { nome: 'Petlove',               logo: 'logos/petlove.png' },
+  { nome: 'Pipicat',               logo: 'logos/pipicat.png',              fundo: '#174FA5' },
+  { nome: 'Casas Bahia',           logo: 'logos/casas-bahia.svg' },
+  { nome: 'Avon',                  logo: 'logos/avon.svg' },
+  { nome: 'Oral-B',                logo: 'logos/oral-b.svg' },
+  { nome: 'Elseve',                logo: 'logos/elseve.png' }
 ];
 
 
@@ -943,9 +967,26 @@ const DEPOIMENTOS = [
   const nichoNome = (id) => (NICHOS.find((n) => n.id === id) || { nome: id }).nome;
 
   /* ---------- Faixa de marcas ---------- */
-  const itensMarcas = MARCAS.map((m) => `<li>${esc(m)}</li>`).join('');
+  const itensMarcas = MARCAS.map((m) => m.logo
+    ? `<li><span class="placa-marca"${m.fundo ? ` style="--fundo-placa:${esc(m.fundo)}"` : ''}><img class="logo-marca" src="${esc(m.logo)}" alt="${esc(m.nome)}" title="${esc(m.nome)}"></span></li>`
+    : `<li>${esc(m.nome)}</li>`).join('');
   $('#faixa-lista').innerHTML = itensMarcas;
   $('#faixa-lista-copia').innerHTML = itensMarcas;
+  /* Tamanho equilibrado dentro da plaquinha: em vez de todas com a mesma altura, cada logo
+     ocupa mais ou menos a mesma ÁREA. Assim as compridas (Casas Bahia) não ficam enormes e as
+     compactas (o "E" da Eudora) não ficam minúsculas. Nunca passa do espaço da plaquinha. */
+  const AREA_LOGO = 1550, LARGURA_MAX = 100, ALTURA_MAX = 32;
+  document.querySelectorAll('.logo-marca').forEach((img) => {
+    const ajusta = () => {
+      const proporcao = img.naturalWidth / img.naturalHeight;
+      if (!proporcao) return;
+      let altura = Math.min(ALTURA_MAX, Math.sqrt(AREA_LOGO / proporcao));
+      if (altura * proporcao > LARGURA_MAX) altura = LARGURA_MAX / proporcao;
+      img.style.height = `${altura.toFixed(1)}px`;
+      img.style.width = `${(altura * proporcao).toFixed(1)}px`;
+    };
+    if (img.complete) ajusta(); else img.addEventListener('load', ajusta);
+  });
 
   /* ---------- Trabalhos e filtros ---------- */
   const filtros = $('#filtros');
