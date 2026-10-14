@@ -192,10 +192,13 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 .capa .frase{font-size:clamp(1.12rem,2vw,1.32rem);max-width:34ch;margin:1.2em 0 1.8em;color:var(--tinta-suave)}
 .capa .frase strong{color:var(--verde);font-weight:600}
 .numeros-capa{
-  list-style:none;margin:40px 0 0;padding:22px 0 0;display:flex;gap:clamp(32px,6vw,64px);
+  list-style:none;margin:40px 0 0;padding:22px 0 0;
+  /* duas metades iguais, cada número centralizado na sua: fica uniforme sob a linha */
+  display:grid;grid-template-columns:1fr 1fr;text-align:center;
   border-top:1px solid rgba(201,162,74,.7);
 }
-.numeros-capa strong{display:block;font-size:clamp(1.9rem,4vw,2.6rem);color:var(--verde);line-height:1;font-weight:600}
+.numeros-capa li + li{border-left:1px solid rgba(201,162,74,.5)}
+.numeros-capa strong{display:block;font-size:clamp(1.9rem,4vw,2.6rem);color:var(--verde);line-height:1;font-weight:600;font-variant-numeric:tabular-nums}
 .numeros-capa span{font-size:.86rem;color:var(--tinta-suave);display:block;margin-top:.35em;line-height:1.3}
 .capa-foto{position:relative;max-width:420px;justify-self:center;width:100%}
 .moldura-arco{
@@ -1162,22 +1165,26 @@ const DEPOIMENTOS = [
       </figure>
     </li>`).join('');
 
-  /* ---------- Contador animado ---------- */
+  /* ---------- Contador animado ----------
+     Os números sobem do 0 até o valor final quando aparecem na tela.
+     Começa depois de um respiro (para a seção terminar de surgir) e desacelera no final. */
   const formata = (n) => n.toLocaleString('pt-BR');
   function animaContador(el) {
     const alvo = Number(el.dataset.contador);
     const sufixo = el.dataset.sufixo || '';
-    if (reduzMovimento) { el.textContent = formata(alvo) + sufixo; return; }
-    const duracao = 1600;
-    const inicio = performance.now();
-    const passo = (agora) => {
-      const p = Math.min((agora - inicio) / duracao, 1);
-      const suave = 1 - Math.pow(1 - p, 3);
-      el.textContent = formata(Math.round(alvo * suave)) + sufixo;
-      if (p < 1) requestAnimationFrame(passo);
-    };
+    const duracao = 2200;
     el.textContent = '0' + sufixo;
-    requestAnimationFrame(passo);
+    setTimeout(() => {
+      const inicio = performance.now();
+      /* passos a cada ~30 ms medidos pelo relógio da página (não depende de quadros de animação) */
+      const passo = () => {
+        const p = Math.min((performance.now() - inicio) / duracao, 1);
+        const suave = 1 - Math.pow(1 - p, 2.2);
+        el.textContent = formata(Math.round(alvo * suave)) + sufixo;
+        if (p < 1) setTimeout(passo, 30);
+      };
+      passo();
+    }, 450);
   }
 
   /* ---------- Animação de entrada ao rolar ---------- */
@@ -1190,16 +1197,18 @@ const DEPOIMENTOS = [
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     reveladores.forEach((el) => obs.observe(el));
-
+  } else {
+    reveladores.forEach((el) => el.classList.add('visivel'));
+  }
+  /* o contador roda mesmo com "menos movimento" ligado: é só o número mudando, sem nada se mexendo na tela */
+  if ('IntersectionObserver' in window) {
+    contadores.forEach((el) => { el.textContent = '0' + (el.dataset.sufixo || ''); });
     const obsNum = new IntersectionObserver((entradas) => {
       entradas.forEach((en) => {
         if (en.isIntersecting) { animaContador(en.target); obsNum.unobserve(en.target); }
       });
     }, { threshold: 0.6 });
     contadores.forEach((el) => obsNum.observe(el));
-  } else {
-    reveladores.forEach((el) => el.classList.add('visivel'));
-    contadores.forEach((el) => { el.textContent = formata(Number(el.dataset.contador)) + (el.dataset.sufixo || ''); });
   }
 
   /* ---------- Menu: sombra, hambúrguer e link ativo ---------- */
