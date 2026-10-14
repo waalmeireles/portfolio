@@ -503,37 +503,6 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .redes svg{width:18px;height:18px}
 
 /* =========================================================
-   CARD DE CAPTURA (mídia kit)
-   ========================================================= */
-.modal-fundo{
-  position:fixed;inset:0;z-index:300;background:rgba(43,30,22,.72);
-  display:grid;place-items:center;padding:16px;
-  opacity:0;visibility:hidden;transition:opacity .35s ease, visibility .35s;
-}
-.modal-fundo.aberto{opacity:1;visibility:visible}
-.modal{
-  width:min(440px,100%);max-height:calc(100vh - 32px);overflow:auto;
-  background:var(--creme);border-radius:28px;padding:44px 30px 30px;position:relative;text-align:center;
-  box-shadow:0 0 0 6px var(--creme),0 0 0 7.5px var(--dourado),0 40px 80px -30px rgba(0,0,0,.6);
-  transform:translateY(16px) scale(.97);transition:transform .35s ease;
-}
-.modal-fundo.aberto .modal{transform:none}
-.modal .toldo-mini{
-  position:absolute;left:0;right:0;top:0;height:14px;border-radius:28px 28px 0 0;
-  background:repeating-linear-gradient(90deg,var(--verde) 0 22px,var(--rosa) 22px 44px);
-}
-.modal h2{font-size:clamp(1.7rem,5vw,2.1rem);color:var(--verde);margin:.1em 0 .4em}
-.modal p{color:var(--tinta-suave);font-size:.98rem}
-.modal .campo{text-align:left}
-.fechar{
-  position:absolute;top:22px;right:16px;width:40px;height:40px;border-radius:50%;
-  border:1.5px solid var(--dourado);background:var(--creme-claro);cursor:var(--cursor-mao);
-  font-size:1.4rem;line-height:1;color:var(--verde);display:grid;place-items:center;
-}
-.fechar:hover{background:var(--rosa-claro)}
-@media (prefers-reduced-motion:reduce){.modal-fundo,.modal{transition:none}}
-
-/* =========================================================
    ANIMAÇÃO DE ENTRADA
    ========================================================= */
 .js .revelar{opacity:0;transform:translateY(26px);transition:opacity .8s ease, transform .8s ease;transition-delay:var(--atraso,0s)}
@@ -801,38 +770,6 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
     <p>© <span id="ano">2026</span> Walquíria Meireles. Todos os direitos reservados.</p>
   </div>
 </footer>
-
-<!-- =========================================================
-     CARD DE CAPTURA: mídia kit
-     ========================================================= -->
-<div class="modal-fundo" id="modal-fundo" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-    <div class="toldo-mini" aria-hidden="true"></div>
-    <button class="fechar" type="button" id="modal-fechar" aria-label="Fechar">×</button>
-    <div id="modal-conteudo">
-      <span class="script">um presentinho</span>
-      <h2 id="modal-titulo">Quer meu mídia kit completo?</h2>
-      <p>Valores, formatos e cases, tudo bonitinho em um arquivo só.</p>
-      <form id="form-kit" novalidate>
-        <div class="campo">
-          <label for="kit-nome">Nome</label>
-          <input id="kit-nome" name="nome" type="text" autocomplete="name" required>
-        </div>
-        <div class="campo">
-          <label for="kit-email">E-mail</label>
-          <input id="kit-email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <button class="botao botao-cheio" type="submit" style="width:100%">Quero receber</button>
-      </form>
-    </div>
-    <div id="modal-obrigado" hidden tabindex="-1">
-      <span class="script">prontinho!</span>
-      <h2>Já já chega no seu e-mail</h2>
-      <p>Obrigada pelo interesse. Enquanto isso, dá uma espiadinha no meu Instagram.</p>
-      <a class="botao botao-cheio" href="https://instagram.com/euwalmeireles" target="_blank" rel="noopener">Ver @euwalmeireles</a>
-    </div>
-  </div>
-</div>
 
 <script>
 /* =========================================================
@@ -1232,56 +1169,6 @@ const DEPOIMENTOS = [
 
   /* ---------- Ano automático ---------- */
   $('#ano').textContent = new Date().getFullYear();
-
-  /* ---------- Card de captura do mídia kit ---------- */
-  const fundo = $('#modal-fundo');
-  const caixa = $('.modal', fundo);
-  const CHAVE = 'midiaKitMostrado';
-  let focoAnterior = null;
-
-  const jaViu = () => { try { return sessionStorage.getItem(CHAVE) === '1'; } catch (e) { return false; } };
-  const marcaVisto = () => { try { sessionStorage.setItem(CHAVE, '1'); } catch (e) {} };
-
-  function focaveis() {
-    return [...caixa.querySelectorAll('a[href], button, input, textarea')].filter((el) => !el.closest('[hidden]'));
-  }
-  function abreModal() {
-    if (jaViu()) return;
-    marcaVisto();
-    focoAnterior = document.activeElement;
-    fundo.classList.add('aberto');
-    fundo.setAttribute('aria-hidden', 'false');
-    setTimeout(() => $('#kit-nome').focus(), 50);
-  }
-  function fechaModal() {
-    fundo.classList.remove('aberto');
-    fundo.setAttribute('aria-hidden', 'true');
-    if (focoAnterior && focoAnterior.focus) focoAnterior.focus();
-  }
-  $('#modal-fechar').addEventListener('click', fechaModal);
-  fundo.addEventListener('click', (e) => { if (e.target === fundo) fechaModal(); });
-  document.addEventListener('keydown', (e) => {
-    if (!fundo.classList.contains('aberto')) return;
-    if (e.key === 'Escape') { fechaModal(); return; }
-    if (e.key === 'Tab') {
-      const f = focaveis();
-      if (!f.length) return;
-      const primeiro = f[0], ultimo = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
-      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
-    }
-  });
-  $('#form-kit').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const f = e.currentTarget;
-    if (!f.checkValidity()) { f.reportValidity(); return; }
-    /* ENVIO: aqui entraria o envio do nome e e-mail para a sua lista */
-    $('#modal-conteudo').hidden = true;
-    const ok = $('#modal-obrigado');
-    ok.hidden = false;
-    ok.focus();
-  });
-  if (!jaViu()) setTimeout(abreModal, 7000);
 })();
 </script>
 </body>
