@@ -464,6 +464,16 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .info-lista{list-style:none;padding:0;margin:0;font-size:.95rem;color:var(--tinta-suave)}
 .info-lista li{padding:.35em 0}
 .info-lista strong{color:var(--verde)}
+.info-lista a{color:inherit;text-decoration:none;transition:color .2s ease}
+.info-lista a:hover{color:var(--rosa)}
+/* aviso de "e-mail copiado" */
+.aviso-copiado{
+  position:fixed;left:50%;bottom:24px;z-index:400;transform:translate(-50%,20px);
+  background:var(--verde-escuro);color:var(--creme);padding:.8em 1.3em;border-radius:999px;
+  font-size:.92rem;box-shadow:var(--sombra);opacity:0;visibility:hidden;
+  transition:opacity .3s ease,transform .3s ease,visibility .3s;max-width:calc(100vw - 32px);text-align:center;
+}
+.aviso-copiado.mostra{opacity:1;visibility:visible;transform:translate(-50%,0)}
 .cartao-form{
   background:var(--creme-claro);border:1.5px solid var(--dourado);border-radius:26px;
   padding:clamp(24px,4vw,40px);box-shadow:var(--sombra);position:relative;
@@ -702,7 +712,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         <h2 id="titulo-contato">Bora criar juntos</h2>
         <p>Me conta sobre a sua marca e o seu produto. Eu respondo rapidinho com uma ideia de roteiro e um orçamento feito sob medida.</p>
         <div class="contato-botoes">
-          <a class="botao botao-cheio" href="https://wa.me/5561991212356" target="_blank" rel="noopener">
+          <a class="botao botao-cheio" href="https://wa.me/5561991212653" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>
             Chamar no WhatsApp
           </a>
@@ -717,9 +727,9 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         </div>
         <ul class="info-lista">
           <li><strong>Cidade:</strong> Brasília, DF</li>
-          <li><strong>E-mail:</strong> waalmeireles@gmail.com</li>
-          <li><strong>WhatsApp:</strong> (61) 99121-2356</li>
-          <li><strong>Instagram:</strong> @euwalmeireles</li>
+          <li><strong>E-mail:</strong> <a href="mailto:waalmeireles@gmail.com">waalmeireles@gmail.com</a></li>
+          <li><strong>WhatsApp:</strong> <a href="https://wa.me/5561991212653" target="_blank" rel="noopener">(61) 99121-2653</a></li>
+          <li><strong>Instagram:</strong> <a href="https://instagram.com/euwalmeireles" target="_blank" rel="noopener">@euwalmeireles</a></li>
         </ul>
       </div>
 
@@ -763,7 +773,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
     <ul class="redes">
       <li><a href="https://instagram.com/euwalmeireles" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>@euwalmeireles</a></li>
-      <li><a href="https://wa.me/5561991212356" target="_blank" rel="noopener">
+      <li><a href="https://wa.me/5561991212653" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7Z"/></svg>WhatsApp</a></li>
       <li><a href="mailto:waalmeireles@gmail.com">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>E-mail</a></li>
@@ -1166,6 +1176,26 @@ const DEPOIMENTOS = [
     conf.hidden = true;
     form.hidden = false;
     form.nome.focus();
+  });
+
+  /* ---------- E-mail: além de abrir o app de e-mail, copia o endereço ----------
+     (se a pessoa não tiver app de e-mail configurado, o link sozinho não faz nada) */
+  const aviso = document.createElement('div');
+  aviso.className = 'aviso-copiado';
+  aviso.setAttribute('role', 'status');
+  document.body.appendChild(aviso);
+  let tempoAviso;
+  document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const endereco = link.getAttribute('href').replace('mailto:', '').split('?')[0];
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(endereco).then(() => {
+        aviso.textContent = `E-mail copiado: ${endereco}`;
+        aviso.classList.add('mostra');
+        clearTimeout(tempoAviso);
+        tempoAviso = setTimeout(() => aviso.classList.remove('mostra'), 3500);
+      }).catch(() => {});
+    });
   });
 
   /* ---------- Ano automático ---------- */
