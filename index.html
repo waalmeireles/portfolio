@@ -192,7 +192,7 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 .capa .frase{font-size:clamp(1.12rem,2vw,1.32rem);max-width:34ch;margin:1.2em 0 1.8em;color:var(--tinta-suave)}
 .capa .frase strong{color:var(--verde);font-weight:600}
 .numeros-capa{
-  list-style:none;margin:40px 0 0;padding:22px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  list-style:none;margin:40px 0 0;padding:22px 0 0;display:flex;gap:clamp(32px,6vw,64px);
   border-top:1px solid rgba(201,162,74,.7);
 }
 .numeros-capa strong{display:block;font-size:clamp(1.9rem,4vw,2.6rem);color:var(--verde);line-height:1;font-weight:600}
@@ -282,44 +282,6 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
   .etiqueta{right:0}
 }
 
-/* =========================================================
-   3. CONTEÚDOS DE DESTAQUE
-   ========================================================= */
-.destaques{background:linear-gradient(180deg,transparent,rgba(246,217,196,.55) 30%,rgba(246,217,196,.55) 70%,transparent)}
-.destaques-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,36px);align-items:start}
-.destaque{
-  display:block;text-decoration:none;color:inherit;background:var(--creme-claro);
-  border:1.5px solid var(--dourado);border-radius:26px;padding:14px 14px 24px;
-  box-shadow:var(--sombra);transition:transform .35s ease, box-shadow .35s ease;
-}
-.destaque:hover{transform:translateY(-6px);box-shadow:0 26px 50px -24px rgba(74,51,36,.55)}
-.destaque:nth-child(2){background:var(--verde);color:var(--creme)}
-.destaque-capa{aspect-ratio:9/16;border-radius:18px}
-.destaque:nth-child(2) .destaque-capa{background:
-  repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 2px,transparent 2px 14px),
-  linear-gradient(170deg,var(--dourado) 0%,#e7cf93 50%,var(--creme-claro) 100%)}
-.destaque:nth-child(3) .destaque-capa{background:
-  repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 2px,transparent 2px 14px),
-  linear-gradient(170deg,#7E5A40 0%,var(--rosa) 70%,var(--creme-claro) 100%)}
-.play{
-  position:absolute;z-index:2;width:74px;height:74px;border-radius:50%;
-  background:var(--creme-claro);display:grid;place-items:center;
-  box-shadow:0 0 0 6px rgba(251,247,234,.45),0 12px 24px -10px rgba(0,0,0,.45);
-  transition:transform .3s ease;
-}
-.play svg{width:26px;height:26px;margin-left:4px;fill:var(--verde)}
-.destaque:hover .play{transform:scale(1.1)}
-.destaque .ph-legenda{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);white-space:nowrap}
-.destaque-info{padding:20px 8px 0;text-align:center}
-.destaque-numero{font-size:clamp(2.4rem,4.5vw,3.2rem);font-weight:600;line-height:1;color:var(--verde);font-variation-settings:"SOFT" 100}
-.destaque:nth-child(2) .destaque-numero{color:var(--creme)}
-.destaque-rotulo{display:block;font-family:var(--manuscrita);font-size:1.45rem;color:var(--dourado-texto);margin:.15em 0 .7em}
-.destaque:nth-child(2) .destaque-rotulo{color:var(--rosa)}
-.destaque h3{font-size:1.25rem;margin-bottom:.4em}
-.destaque p{font-size:.95rem;margin:0;opacity:.9}
-@media (max-width:860px){
-  .destaques-grade{grid-template-columns:1fr;max-width:380px;margin-inline:auto}
-}
 
 /* =========================================================
    4. TRABALHOS POR NICHO
@@ -332,6 +294,8 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 }
 .filtro:hover{background:var(--rosa-claro)}
 .filtro[aria-pressed="true"]{background:var(--verde);color:var(--creme);border-color:var(--verde)}
+.filtro-atalho{text-decoration:none;color:var(--rosa);border-color:var(--rosa);font-weight:600}
+.filtro-atalho:hover{background:var(--rosa);color:var(--creme-claro)}
 .bloco-nicho + .bloco-nicho{margin-top:56px}
 .bloco-nicho.sumindo{display:none}
 .titulo-nicho{
@@ -403,6 +367,47 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 /* =========================================================
    5. COMO EU TE AJUDO
    ========================================================= */
+/* =========================================================
+   4b. UGC CANVAS (perfis)
+   ========================================================= */
+.ugc-canvas{background:linear-gradient(180deg,transparent,rgba(246,217,196,.55) 30%,rgba(246,217,196,.55) 70%,transparent)}
+/* flex com quebra centralizada: a última linha fica no meio, não encostada à esquerda */
+.perfis-grade{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.perfis-grade > li{flex:0 1 280px}
+.perfil{
+  display:flex;flex-direction:column;align-items:center;text-align:center;height:100%;
+  padding:32px 22px 26px;border-radius:24px;text-decoration:none;color:inherit;position:relative;
+  background:var(--creme-claro);border:1.5px solid var(--dourado);
+  transition:transform .3s ease,box-shadow .3s ease,background-color .3s ease;
+}
+.perfil::before{content:"";position:absolute;inset:7px;border:1px solid rgba(201,162,74,.45);border-radius:18px;pointer-events:none}
+.perfil:hover{transform:translateY(-5px);box-shadow:0 22px 40px -22px rgba(210,105,30,.6)}
+.perfil-foto{
+  width:96px;height:96px;border-radius:50%;overflow:hidden;display:grid;place-items:center;flex:none;
+  background:linear-gradient(160deg,var(--rosa),#E9A877 60%,var(--creme-claro));
+  box-shadow:0 0 0 4px var(--creme-claro),0 0 0 5.5px var(--dourado);margin-bottom:18px;
+  font-family:var(--manuscrita);font-size:2.6rem;color:var(--creme-claro);
+}
+.perfil-foto img{width:100%;height:100%;object-fit:cover}
+.perfil .tag{margin-bottom:.6em}
+.perfil h3{font-size:1.3rem;color:var(--verde);word-break:break-word}
+.perfil-ver{
+  display:inline-flex;align-items:center;gap:.4em;margin-top:auto;padding-top:16px;
+  font-size:.9rem;font-weight:600;color:var(--rosa);
+}
+.perfil-ver svg{width:16px;height:16px;transition:transform .25s ease}
+.perfil:hover .perfil-ver svg{transform:translateX(4px)}
+.cabeca-videos-canvas{text-align:center;margin:clamp(56px,8vw,88px) 0 32px}
+.cabeca-videos-canvas h3{font-size:clamp(1.8rem,3.6vw,2.4rem);color:var(--verde)}
+.videos-canvas{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:22px}
+.videos-canvas > li{flex:0 1 250px;min-width:220px}
+/* os cartões usam o mesmo estilo dos vídeos por nicho (.trabalho, .ph-video) */
+.ph-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--verde-escuro)}
+.video-canvas-info{padding:16px 18px 20px;text-align:center}
+.video-canvas-views{display:block;font-family:var(--serifa);font-size:clamp(1.7rem,3vw,2.1rem);font-weight:600;line-height:1;color:var(--rosa)}
+.video-canvas-rotulo{display:block;font-family:var(--manuscrita);font-size:1.3rem;color:var(--verde);margin-top:.1em}
+.video-canvas-perfil{display:block;font-size:.85rem;color:var(--tinta-suave);margin-top:.4em}
+
 .servicos-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;list-style:none;margin:0;padding:0}
 .servico{
   height:100%;background:var(--creme-claro);border:3px double var(--dourado);border-radius:22px;
@@ -426,7 +431,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
   content:"";position:absolute;left:0;right:0;top:-24px;height:24px;
   background:radial-gradient(circle at 20px 24px,var(--verde) 19.5px,transparent 20.5px) 0 0/40px 24px repeat-x;
 }
-.metricas{list-style:none;margin:0 0 72px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.metricas{list-style:none;margin:0 0 72px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .metrica{text-align:center;padding:24px 12px;border:1px solid rgba(201,162,74,.6);border-radius:20px;background:rgba(74,51,36,.4)}
 .metrica strong{display:block;font-size:clamp(2.6rem,5vw,3.8rem);line-height:1;font-weight:600;color:var(--creme);font-variation-settings:"SOFT" 100}
 .metrica span{display:block;margin-top:.5em;font-size:.95rem}
@@ -447,7 +452,8 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .depoimento figcaption strong{display:block;color:var(--verde)}
 .depoimento figcaption span{font-size:.88rem;color:var(--tinta-suave)}
 @media (max-width:900px){
-  .metricas{grid-template-columns:repeat(2,1fr)}
+  .metricas{gap:10px}
+  .metrica{padding:20px 6px}
   .resultados{grid-template-columns:1fr}
   .depoimentos{grid-template-columns:1fr}
 }
@@ -466,6 +472,19 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .info-lista strong{color:var(--verde)}
 .info-lista a{color:inherit;text-decoration:none;transition:color .2s ease}
 .info-lista a:hover{color:var(--rosa)}
+/* botão "voltar ao topo": aparece depois que a pessoa desce um pouco a página */
+.voltar-topo{
+  position:fixed;right:clamp(16px,3vw,28px);bottom:clamp(16px,3vw,28px);z-index:90;
+  display:inline-flex;align-items:center;gap:.45em;padding:.75em 1.15em;border-radius:999px;
+  background:var(--verde);color:var(--creme);text-decoration:none;font-size:.9rem;font-weight:600;
+  box-shadow:0 0 0 3px var(--creme),0 0 0 4.5px var(--dourado),0 14px 28px -12px rgba(210,105,30,.7);
+  opacity:0;visibility:hidden;transform:translateY(14px);
+  transition:opacity .3s ease,transform .3s ease,visibility .3s,background-color .25s ease;
+}
+.voltar-topo.mostra{opacity:1;visibility:visible;transform:none}
+.voltar-topo:hover{background:var(--rosa)}
+.voltar-topo svg{width:18px;height:18px}
+@media (max-width:600px){.voltar-topo span{display:none}.voltar-topo{padding:.8em}}
 /* aviso de "e-mail copiado" */
 .aviso-copiado{
   position:fixed;left:50%;bottom:24px;z-index:400;transform:translate(-50%,20px);
@@ -539,8 +558,8 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
     <nav class="menu" id="menu" aria-label="Menu principal">
       <ul>
         <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#destaques">Destaques</a></li>
         <li><a href="#trabalhos">Trabalhos</a></li>
+        <li><a href="#ugc-canvas">UGC Canvas</a></li>
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#numeros">Números</a></li>
         <li><a href="#contato">Contato</a></li>
@@ -565,9 +584,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         <!-- Números da capa: para trocar, edite o data-contador (número) ou o texto -->
         <ul class="numeros-capa">
           <li><strong data-contador="100">100</strong><span>vídeos entregues</span></li>
-          <li><strong data-contador="50">50</strong><span>marcas atendidas</span></li>
-          <!-- TROQUE AQUI: coloque o total de views somadas (ex.: 2,4M) -->
-          <li><strong>+00M</strong><span>views somadas</span></li>
+          <li><strong data-contador="60">60</strong><span>marcas atendidas</span></li>
         </ul>
       </div>
 
@@ -621,7 +638,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         <span class="script">prazer,</span>
         <h2 id="titulo-sobre">Sobre mim</h2>
         <p>Eu sou a Walquíria, moro em Brasília e transformo produtos em pequenas histórias que dá vontade de viver. Gravo como quem conversa com uma amiga: com calma, verdade e aquele cuidado de vitrine bem arrumada.</p>
-        <p>Já entreguei 100 vídeos para 50 marcas de beleza, moda, casa e decoração, pet e tech, e cada um foi feito como se fosse o primeiro. Comigo, você sabe exatamente o que vai receber:</p>
+        <p>Já entreguei 100 vídeos para 60 marcas de beleza, moda, casa e decoração, pet e tech, e cada um foi feito como se fosse o primeiro. Comigo, você sabe exatamente o que vai receber:</p>
         <ul class="promessas">
           <li><span class="num" aria-hidden="true">1</span><span><strong>Roteiro aprovado antes de gravar</strong>, para você ver a ideia no papel primeiro.</span></li>
           <li><span class="num" aria-hidden="true">2</span><span><strong>Uma rodada de ajuste inclusa</strong>, sem custo extra.</span></li>
@@ -630,22 +647,6 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         <p class="assinatura">Walquíria Meireles</p>
         <p class="assinatura-sub">UGC Creator ✦ Brasília</p>
       </div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       3. CONTEÚDOS DE DESTAQUE
-       (os três cards vêm do array DESTAQUES no script:
-        o link do vídeo entra no campo "link" e a capa no campo "capa")
-       ========================================================= -->
-  <section class="secao destaques" id="destaques" aria-labelledby="titulo-destaques">
-    <div class="conteiner">
-      <header class="cabeca revelar">
-        <span class="script">os queridinhos</span>
-        <h2 id="titulo-destaques">Conteúdos de destaque</h2>
-        <div class="ornamento" aria-hidden="true">✦</div>
-      </header>
-      <div class="destaques-grade" id="destaques-grade"></div>
     </div>
   </section>
 
@@ -664,6 +665,28 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
       <p class="sr-only" id="aviso-filtro" aria-live="polite"></p>
       <!-- um carrossel por nicho, montado a partir da lista TRABALHOS lá embaixo -->
       <div id="blocos-nichos"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4b. UGC CANVAS: perfis (lista PERFIS_CANVAS lá embaixo)
+       ========================================================= -->
+  <section class="secao ugc-canvas" id="ugc-canvas" aria-labelledby="titulo-ugc-canvas">
+    <div class="conteiner">
+      <header class="cabeca revelar">
+        <span class="script">minha galeria</span>
+        <h2 id="titulo-ugc-canvas">UGC Canvas</h2>
+        <p class="intro">Uma seleção dos meus trabalhos de UGC Canvas, criados para marcas que querem conteúdo com cara de gente de verdade.</p>
+        <div class="ornamento" aria-hidden="true">✦</div>
+      </header>
+      <ul class="perfis-grade" id="perfis-grade"></ul>
+
+      <header class="cabeca-videos-canvas revelar">
+        <span class="script">os que mais bombaram</span>
+        <h3>Vídeos em destaque</h3>
+        <div class="ornamento" aria-hidden="true">✦</div>
+      </header>
+      <ul class="videos-canvas" id="videos-canvas"></ul>
     </div>
   </section>
 
@@ -782,6 +805,11 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
   </div>
 </footer>
 
+<a class="voltar-topo" id="voltar-topo" href="#inicio" aria-label="Voltar ao topo">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Voltar ao topo</span>
+</a>
+
 <script>
 /* =========================================================
    SEUS DADOS: edite só esta parte para mudar o conteúdo do site
@@ -794,19 +822,6 @@ const MARCAS = [
   'Marca 09', 'Marca 10', 'Marca 11', 'Marca 12'
 ];
 
-/* DESTAQUES: os três vídeos grandes.
-   link: COLE AQUI O LINK DO VÍDEO (Instagram, TikTok, YouTube ou Drive).
-   capa: COLOQUE AQUI O CAMINHO DA IMAGEM DE CAPA 9:16 (ex.: 'capa-01.jpg', na mesma pasta do index.html).
-         Deixando vazio (''), aparece o bloco em degradê.
-   numero e rotulo: TROQUE pelo resultado real de cada vídeo. */
-const DESTAQUES = [
-  { link: '#', capa: '', numero: '+0,0M', rotulo: 'views no reels',
-    titulo: 'Rotina de cuidados com a pele', contexto: 'Vídeo UGC para anúncio, Marca 01' },
-  { link: '#', capa: '', numero: '+0,0M', rotulo: 'views no reels',
-    titulo: 'Unboxing com o pet da casa', contexto: 'Publicação em parceria, Marca 02' },
-  { link: '#', capa: '', numero: '+00%', rotulo: 'de engajamento',
-    titulo: 'Cantinho do café renovado', contexto: 'Corte para anúncio, Marca 03' }
-];
 
 /* NICHOS: aparecem no site nesta ordem, cada um com o seu carrossel.
    O "id" liga o nicho aos vídeos. */
@@ -851,6 +866,33 @@ const TRABALHOS = [
   { nicho: 'casa',   nome: 'Coala',                  video: 'l8UiAcPKpV0' }
 ];
 
+/* PERFIS DE UGC CANVAS: cada linha vira um cartão clicável.
+   perfil: o @ ou nome do perfil. persona: para que é o perfil (ex.: 'Estudante').
+   link: o endereço completo do perfil. foto: caminho de uma foto (deixe '' para mostrar a inicial).
+   */
+const PERFIS_CANVAS = [
+  { perfil: '@waledita',            persona: 'Edição',                  link: 'https://www.instagram.com/waledita/',            foto: 'perfis/waledita.jpg' },
+  { perfil: '@datingbywal',         persona: 'Relacionamento',          link: 'https://www.instagram.com/datingbywal/',         foto: 'perfis/datingbywal.jpg' },
+  { perfil: '@wal.sentiments',      persona: 'Espiritualidade',         link: 'https://www.instagram.com/wal.sentiments/',      foto: 'perfis/wal.sentiments.jpg' },
+  { perfil: '@perfilportfoliougc',  persona: 'Estudos',                 link: 'https://www.instagram.com/perfilportfoliougc/',  foto: 'perfis/perfilportfoliougc.jpg' },
+  { perfil: '@wal.achados',         persona: 'Achadinhos e promoções',  link: 'https://www.instagram.com/wal.achados/',         foto: 'perfis/wal.achados.jpg' }
+];
+
+/* VÍDEOS EM DESTAQUE DO UGC CANVAS: os arquivos ficam na pasta "videos-canvas".
+   video: o arquivo .mp4. capa: a imagem que aparece antes de tocar.
+   views: o número em destaque. perfil e rede: aparecem embaixo do número.
+   A ordem desta lista é a ordem no site (hoje: do mais visto para o menos visto). */
+const VIDEOS_CANVAS = [
+  { video: 'videos-canvas/DcTdIqgIWLi.mp4',                capa: 'videos-canvas/DcTdIqgIWLi.jpg',                views: '1,1 milhão', perfil: '@wal.achados',        rede: 'Instagram' },
+  { video: 'videos-canvas/tiktok-7618574401759448341.mp4', capa: 'videos-canvas/tiktok-7618574401759448341.jpg', views: '982,6 mil',  perfil: '@perfilportfoliougc', rede: 'TikTok' },
+  { video: 'videos-canvas/DZLhwyOoJT4.mp4',                capa: 'videos-canvas/DZLhwyOoJT4.jpg',                views: '935 mil',    perfil: '@perfilportfoliougc', rede: 'Instagram' },
+  { video: 'videos-canvas/DdZFyd6IjBX.mp4',                capa: 'videos-canvas/DdZFyd6IjBX.jpg',                views: '832 mil',    perfil: '@wal.achados',        rede: 'Instagram' },
+  { video: 'videos-canvas/DcBeGgchHFZ.mp4',                capa: 'videos-canvas/DcBeGgchHFZ.jpg',                views: '725 mil',    perfil: '@wal.achados',        rede: 'Instagram' },
+  { video: 'videos-canvas/tiktok-7628332351843503381.mp4', capa: 'videos-canvas/tiktok-7628332351843503381.jpg', views: '324,5 mil',  perfil: '@perfilportfoliougc', rede: 'TikTok' },
+  { video: 'videos-canvas/tiktok-7695817645840452884.mp4', capa: 'videos-canvas/tiktok-7695817645840452884.jpg', views: '85,7 mil',   perfil: '@wal.sentiments',     rede: 'TikTok' },
+  { video: 'videos-canvas/DYS7LdVvsQ1.mp4',                capa: 'videos-canvas/DYS7LdVvsQ1.jpg',                views: '78,6 mil',   perfil: '@waledita',           rede: 'Instagram' }
+];
+
 /* SERVIÇOS: número, título e descrição curta. */
 const SERVICOS = [
   { titulo: 'Vídeo UGC', descricao: 'Roteiro, gravação e edição de vídeos verticais com linguagem natural, pensados para Reels, TikTok e Shorts.' },
@@ -865,8 +907,7 @@ const SERVICOS = [
    numero: o valor que o contador vai animar. Se ainda não tiver o número, use texto: '...' (sem contador). */
 const METRICAS = [
   { numero: 100, sufixo: '', rotulo: 'vídeos entregues' },
-  { numero: 50,  sufixo: '', rotulo: 'marcas atendidas' },
-  { texto: '+00M', rotulo: 'views somadas' },   /* TROQUE: total de views (ex.: numero: 2, sufixo: 'M') */
+  { numero: 60,  sufixo: '', rotulo: 'marcas atendidas' },
   { numero: 5,   sufixo: '', rotulo: 'nichos atendidos' }
 ];
 
@@ -902,28 +943,13 @@ const DEPOIMENTOS = [
   $('#faixa-lista').innerHTML = itensMarcas;
   $('#faixa-lista-copia').innerHTML = itensMarcas;
 
-  /* ---------- Destaques ---------- */
-  const iconePlay = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.9l12-7.5a1 1 0 0 0 0-1.8l-12-7.5A1 1 0 0 0 7 4.5Z"/></svg>';
-  $('#destaques-grade').innerHTML = DESTAQUES.map((d, i) => `
-    <a class="destaque revelar" style="--atraso:${i * 0.12}s" href="${esc(d.link)}" ${d.link !== '#' ? 'target="_blank" rel="noopener"' : ''}
-       aria-label="Assistir: ${esc(d.titulo)}, ${esc(d.numero)} ${esc(d.rotulo)}">
-      <div class="ph destaque-capa">
-        ${d.capa ? `<img src="${esc(d.capa)}" alt="Capa do vídeo ${esc(d.titulo)}" loading="lazy">` : '<span class="ph-legenda">capa do vídeo 9:16</span>'}
-        <span class="play" aria-hidden="true">${iconePlay}</span>
-      </div>
-      <div class="destaque-info">
-        <div class="destaque-numero">${esc(d.numero)}</div>
-        <span class="destaque-rotulo">${esc(d.rotulo)}</span>
-        <h3>${esc(d.titulo)}</h3>
-        <p>${esc(d.contexto)}</p>
-      </div>
-    </a>`).join('');
-
   /* ---------- Trabalhos e filtros ---------- */
   const filtros = $('#filtros');
   filtros.innerHTML = [{ id: 'todos', nome: 'Todos' }, ...NICHOS]
     .map((n) => `<button type="button" class="filtro" data-filtro="${esc(n.id)}" aria-pressed="${n.id === 'todos'}">${esc(n.nome)}</button>`)
-    .join('');
+    .join('')
+    /* UGC Canvas não é um filtro: é um atalho que leva até a seção dele, logo abaixo */
+    + '<a class="filtro filtro-atalho" href="#ugc-canvas">UGC Canvas ↓</a>';
 
   const cartaoVideo = (t) => `
     <li class="item-trab nicho-${esc(t.nicho)}">
@@ -1015,10 +1041,10 @@ const DEPOIMENTOS = [
   window.addEventListener('resize', atualizaSetas);
 
   filtros.addEventListener('click', (e) => {
-    const botao = e.target.closest('.filtro');
+    const botao = e.target.closest('button.filtro');
     if (!botao) return;
     const escolhido = botao.dataset.filtro;
-    filtros.querySelectorAll('.filtro').forEach((b) => b.setAttribute('aria-pressed', String(b === botao)));
+    filtros.querySelectorAll('button.filtro').forEach((b) => b.setAttribute('aria-pressed', String(b === botao)));
     let total = 0;
     blocosNichos.querySelectorAll('.bloco-nicho').forEach((bloco) => {
       const mostra = escolhido === 'todos' || bloco.dataset.nicho === escolhido;
@@ -1035,6 +1061,65 @@ const DEPOIMENTOS = [
     blocosNichos.querySelectorAll('.trabalhos-grade').forEach((g) => g.scrollTo({ left: 0 }));
     atualizaSetas();
     $('#aviso-filtro').textContent = `${total} ${total === 1 ? 'vídeo' : 'vídeos'} em ${botao.textContent}`;
+  });
+
+  /* ---------- UGC Canvas: perfis ---------- */
+  const setaPerfil = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  $('#perfis-grade').innerHTML = PERFIS_CANVAS.map((p, i) => {
+    const externo = p.link && p.link !== '#';
+    const inicial = p.perfil.replace('@', '').charAt(0).toUpperCase();
+    return `
+    <li class="revelar" style="--atraso:${(i % 3) * 0.1}s">
+      <a class="perfil" href="${externo ? esc(p.link) : '#ugc-canvas'}" ${externo ? 'target="_blank" rel="noopener"' : ''}
+         aria-label="Ver o perfil ${esc(p.perfil)}, ${esc(p.persona)}">
+        <span class="perfil-foto" aria-hidden="true">${p.foto ? `<img src="${esc(p.foto)}" alt="" loading="lazy">` : esc(inicial)}</span>
+        <span class="tag">${esc(p.persona)}</span>
+        <h3>${esc(p.perfil)}</h3>
+        <span class="perfil-ver">Ver perfil ${setaPerfil}</span>
+      </a>
+    </li>`;
+  }).join('');
+
+  /* ---------- UGC Canvas: vídeos em destaque ----------
+     Mesmo jeito dos vídeos por nicho: com o mouse começa sem som e pausa ao sair;
+     clicando no play (ou no celular) toca com som e mostra os controles. */
+  const gradeCanvas = $('#videos-canvas');
+  gradeCanvas.innerHTML = VIDEOS_CANVAS.map((v, i) => `
+    <li class="revelar" style="--atraso:${(i % 4) * 0.1}s">
+      <article class="trabalho video-canvas">
+        <div class="ph ph-video">
+          <video src="${esc(v.video)}" poster="${esc(v.capa)}" preload="none" playsinline loop></video>
+          <button type="button" class="tocar-video" aria-label="Assistir ao vídeo de ${esc(v.perfil)} no ${esc(v.rede)}, ${esc(v.views)} de views">
+            <span class="icone-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+          </button>
+        </div>
+        <div class="video-canvas-info">
+          <span class="video-canvas-views">${esc(v.views)}</span>
+          <span class="video-canvas-rotulo">de views</span>
+          <span class="video-canvas-perfil">${esc(v.perfil)} · ${esc(v.rede)}</span>
+        </div>
+      </article>
+    </li>`).join('');
+
+  gradeCanvas.querySelectorAll('.ph-video').forEach((caixa) => {
+    const video = $('video', caixa);
+    const botao = $('.tocar-video', caixa);
+    caixa.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse' || video.controls) return;
+      video.muted = true;
+      video.play().catch(() => {});
+    });
+    caixa.addEventListener('pointerleave', (e) => {
+      if (e.pointerType === 'mouse' && !video.controls) video.pause();
+    });
+    botao.addEventListener('click', () => {
+      /* pausa os outros vídeos em destaque para não tocarem juntos */
+      gradeCanvas.querySelectorAll('video').forEach((outro) => { if (outro !== video) outro.pause(); });
+      video.muted = false;
+      video.controls = true;
+      botao.hidden = true;
+      video.play().catch(() => {});
+    });
   });
 
   /* ---------- Serviços ---------- */
@@ -1121,7 +1206,11 @@ const DEPOIMENTOS = [
   const topo = $('#topo');
   const menu = $('#menu');
   const hamb = $('#hamburguer');
-  const aoRolar = () => topo.classList.toggle('rolou', window.scrollY > 10);
+  const botaoTopo = $('#voltar-topo');
+  const aoRolar = () => {
+    topo.classList.toggle('rolou', window.scrollY > 10);
+    botaoTopo.classList.toggle('mostra', window.scrollY > window.innerHeight * 0.8);
+  };
   window.addEventListener('scroll', aoRolar, { passive: true });
   aoRolar();
 
