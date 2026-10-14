@@ -587,7 +587,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         <!-- Números da capa: para trocar, edite o data-contador (número) ou o texto -->
         <ul class="numeros-capa">
           <li><strong data-contador="100">100</strong><span>vídeos entregues</span></li>
-          <li><strong data-contador="60">60</strong><span>marcas atendidas</span></li>
+          <li><strong data-contador="60" data-prefixo="+">+60</strong><span>marcas atendidas</span></li>
         </ul>
       </div>
 
@@ -641,7 +641,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         <span class="script">prazer,</span>
         <h2 id="titulo-sobre">Sobre mim</h2>
         <p>Eu sou a Walquíria, moro em Brasília e transformo produtos em pequenas histórias que dá vontade de viver. Gravo como quem conversa com uma amiga: com calma, verdade e aquele cuidado de vitrine bem arrumada.</p>
-        <p>Já entreguei 100 vídeos para 60 marcas de beleza, moda, casa e decoração, pet e tech, e cada um foi feito como se fosse o primeiro. Comigo, você sabe exatamente o que vai receber:</p>
+        <p>Já entreguei 100 vídeos para mais de 60 marcas de beleza, moda, casa e decoração, pet e tech, e cada um foi feito como se fosse o primeiro. Comigo, você sabe exatamente o que vai receber:</p>
         <ul class="promessas">
           <li><span class="num" aria-hidden="true">1</span><span><strong>Roteiro aprovado antes de gravar</strong>, para você ver a ideia no papel primeiro.</span></li>
           <li><span class="num" aria-hidden="true">2</span><span><strong>Uma rodada de ajuste inclusa</strong>, sem custo extra.</span></li>
@@ -907,10 +907,11 @@ const SERVICOS = [
 ];
 
 /* MÉTRICAS com contador animado.
-   numero: o valor que o contador vai animar. Se ainda não tiver o número, use texto: '...' (sem contador). */
+   numero: o valor que o contador vai animar. prefixo/sufixo: o que aparece antes/depois (ex.: '+').
+   Se ainda não tiver o número, use texto: '...' (sem contador). */
 const METRICAS = [
   { numero: 100, sufixo: '', rotulo: 'vídeos entregues' },
-  { numero: 60,  sufixo: '', rotulo: 'marcas atendidas' },
+  { numero: 60,  prefixo: '+', sufixo: '', rotulo: 'marcas atendidas' },
   { numero: 5,   sufixo: '', rotulo: 'nichos atendidos' }
 ];
 
@@ -1139,7 +1140,7 @@ const DEPOIMENTOS = [
   $('#metricas').innerHTML = METRICAS.map((m, i) => `
     <li class="metrica revelar" style="--atraso:${i * 0.1}s">
       ${typeof m.numero === 'number'
-        ? `<strong data-contador="${m.numero}" data-sufixo="${esc(m.sufixo || '')}">${m.numero}${esc(m.sufixo || '')}</strong>`
+        ? `<strong data-contador="${m.numero}" data-prefixo="${esc(m.prefixo || '')}" data-sufixo="${esc(m.sufixo || '')}">${esc(m.prefixo || '')}${m.numero}${esc(m.sufixo || '')}</strong>`
         : `<strong>${esc(m.texto)}</strong>`}
       <span>${esc(m.rotulo)}</span>
     </li>`).join('');
@@ -1171,16 +1172,17 @@ const DEPOIMENTOS = [
   const formata = (n) => n.toLocaleString('pt-BR');
   function animaContador(el) {
     const alvo = Number(el.dataset.contador);
+    const prefixo = el.dataset.prefixo || '';
     const sufixo = el.dataset.sufixo || '';
     const duracao = 2200;
-    el.textContent = '0' + sufixo;
+    el.textContent = prefixo + '0' + sufixo;
     setTimeout(() => {
       const inicio = performance.now();
       /* passos a cada ~30 ms medidos pelo relógio da página (não depende de quadros de animação) */
       const passo = () => {
         const p = Math.min((performance.now() - inicio) / duracao, 1);
         const suave = 1 - Math.pow(1 - p, 2.2);
-        el.textContent = formata(Math.round(alvo * suave)) + sufixo;
+        el.textContent = prefixo + formata(Math.round(alvo * suave)) + sufixo;
         if (p < 1) setTimeout(passo, 30);
       };
       passo();
@@ -1202,7 +1204,7 @@ const DEPOIMENTOS = [
   }
   /* o contador roda mesmo com "menos movimento" ligado: é só o número mudando, sem nada se mexendo na tela */
   if ('IntersectionObserver' in window) {
-    contadores.forEach((el) => { el.textContent = '0' + (el.dataset.sufixo || ''); });
+    contadores.forEach((el) => { el.textContent = (el.dataset.prefixo || '') + '0' + (el.dataset.sufixo || ''); });
     const obsNum = new IntersectionObserver((entradas) => {
       entradas.forEach((en) => {
         if (en.isIntersecting) { animaContador(en.target); obsNum.unobserve(en.target); }
