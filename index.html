@@ -259,8 +259,29 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 /* =========================================================
    2. SOBRE MIM
    ========================================================= */
-.sobre-grade{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(36px,6vw,88px);align-items:center}
-.sobre-foto{position:relative;max-width:400px;width:100%;justify-self:center}
+.sobre-grade{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(32px,5vw,72px);align-items:center}
+.sobre-lado{display:grid;gap:30px;justify-items:center;align-self:start}
+.sobre-foto{position:relative;max-width:540px;width:100%;justify-self:center}
+/* a etiqueta "oi, marcas!" fica no meio, entre as duas fotos */
+.sobre-foto .etiqueta{right:auto;left:50%;top:7%;transform:translateX(-50%) rotate(-5deg);z-index:2;white-space:nowrap}
+/* duas molduras do mesmo tamanho, lado a lado */
+.sobre-fotos{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.sobre-fotos figure{margin:0}
+.sobre-fotos .moldura-arco{padding:8px}
+.sobre-fotos .moldura-arco img{object-position:50% 30%}
+.sobre-fotos figcaption{text-align:center;font-family:var(--manuscrita);font-size:1.45rem;color:var(--verde);margin-top:.35em;line-height:1}
+/* dois quadrinhos lado a lado, mesma largura e mesma altura: Creative skills e o processo */
+.sobre-cartoes{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;margin-top:clamp(48px,6vw,72px)}
+.cartao-sobre{
+  background:var(--creme-claro);border:1.5px solid var(--dourado);border-radius:24px;
+  padding:30px 32px 28px;box-shadow:var(--sombra);position:relative;
+}
+.cartao-sobre::before{content:"";position:absolute;inset:7px;border:1px solid rgba(201,162,74,.45);border-radius:18px;pointer-events:none}
+.cartao-sobre h3{font-family:var(--manuscrita);font-weight:400;font-size:2.1rem;color:var(--rosa);margin:0 0 .5em;text-align:center}
+.skills dl{margin:0}
+.skills dt{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--verde);margin-top:18px}
+.skills dt:first-child{margin-top:0}
+.skills dd{margin:.35em 0 0;font-size:.98rem;color:var(--tinta-suave);line-height:1.55}
 .sobre-foto .moldura-arco .ph{background:
   repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 2px,transparent 2px 14px),
   linear-gradient(170deg,var(--verde) 0%,#8F6A4E 50%,var(--rosa) 100%)}
@@ -273,23 +294,27 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 .sobre-texto .script{text-align:left}
 .sobre-texto h2{font-size:clamp(2.2rem,5vw,3.4rem);color:var(--verde);margin-bottom:.5em}
 .sobre-texto > p{font-size:1.1rem;color:var(--tinta-suave);max-width:58ch}
-.promessas{list-style:none;padding:0;margin:28px 0 30px;display:grid;gap:14px}
-.promessas li{
-  display:flex;gap:16px;align-items:center;background:var(--creme-claro);
-  border:1px solid rgba(201,162,74,.6);border-radius:14px;padding:14px 18px;
-}
+/* as três promessas, dentro do quadrinho do processo, separadas por linhas tracejadas */
+.promessas{list-style:none;padding:0;margin:0;display:grid}
+.promessas li{display:flex;gap:16px;align-items:center;padding:14px 0;font-size:.98rem;line-height:1.5}
+.promessas li + li{border-top:1px dashed rgba(201,162,74,.7)}
+.promessas li:first-child{padding-top:4px}
 .promessas .num{
-  flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
   background:var(--verde);color:var(--creme);font-style:italic;font-weight:600;
   box-shadow:0 0 0 3px var(--creme-claro),0 0 0 4.5px var(--dourado);
 }
 .promessas strong{color:var(--verde)}
-.assinatura{font-family:var(--manuscrita);font-size:clamp(2.4rem,5vw,3.2rem);color:var(--verde);line-height:1;margin:0}
+/* assinatura centralizada, fechando a seção */
+.sobre-assinatura{text-align:center;margin-top:clamp(40px,5vw,56px)}
+.sobre-assinatura .assinatura{font-family:var(--manuscrita);font-size:clamp(2.4rem,5vw,3.2rem);color:var(--verde);line-height:1;margin:0}
 .assinatura-sub{font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dourado-texto);margin-top:.4em}
 @media (max-width:860px){
   .sobre-grade{grid-template-columns:1fr}
-  .sobre-foto{max-width:320px}
-  .etiqueta{right:0}
+  .sobre-foto{max-width:460px}
+  .sobre-cartoes{grid-template-columns:1fr;gap:22px}
+  .cartao-sobre{padding:26px 22px 22px}
+  .etiqueta{font-size:1.25rem}
 }
 
 
@@ -408,6 +433,8 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .perfil-ver svg{width:16px;height:16px;transition:transform .25s ease}
 .perfil:hover .perfil-ver svg{transform:translateX(4px)}
 .cabeca-videos-canvas{text-align:center;margin:clamp(56px,8vw,88px) 0 32px}
+.cabeca-videos-canvas.primeira{margin-top:0}
+.cabeca-perfis{margin-top:clamp(64px,9vw,104px)}
 .cabeca-videos-canvas h3{font-size:clamp(1.8rem,3.6vw,2.4rem);color:var(--verde)}
 .videos-canvas{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:22px}
 .videos-canvas > li{flex:0 1 250px;min-width:220px}
@@ -421,8 +448,13 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .servicos-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;list-style:none;margin:0;padding:0}
 .servico{
   height:100%;background:var(--creme-claro);border:3px double var(--dourado);border-radius:22px;
-  padding:30px 28px;position:relative;transition:background-color .3s ease, transform .3s ease;
+  padding:30px 28px 22px;position:relative;transition:background-color .3s ease, transform .3s ease;
+  display:flex;flex-direction:column;
 }
+/* estrelinha com as linhas douradas no pé de cada bloco (igual à dos títulos, menor);
+   margin-top:auto alinha todas na mesma altura, mesmo com textos de tamanhos diferentes */
+.servico-estrela{margin:auto auto 0;padding-top:18px;font-size:.8rem}
+.servico-estrela::before,.servico-estrela::after{width:40px}
 .servico:hover{background:var(--rosa-claro);transform:translateY(-4px)}
 .servico-num{
   font-size:2.8rem;font-style:italic;font-weight:300;color:var(--dourado-texto);line-height:1;
@@ -633,30 +665,62 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
        ========================================================= -->
   <section class="secao" id="sobre" aria-labelledby="titulo-sobre">
     <div class="conteiner sobre-grade">
+      <div class="sobre-lado">
       <div class="sobre-foto revelar">
-        <div class="moldura-arco">
-          <!-- FOTO DO SOBRE: troque o bloco abaixo por
-               <img src="sobre.jpg" alt="Walquíria Meireles gravando um vídeo em casa" width="800" height="1000"> -->
-          <div class="ph" role="img" aria-label="Espaço para a foto da Walquíria Meireles gravando">
-            <span class="ph-legenda">foto da creator 4:5</span>
-          </div>
+        <!-- DUAS FOTOS DO SOBRE, em molduras iguais: a creator e a atriz caracterizada -->
+        <div class="sobre-fotos">
+          <figure>
+            <div class="moldura-arco">
+              <img src="sobre-creator.jpg" alt="Walquíria Meireles sorrindo, de cabelo solto e blusa preta" width="1000" height="1250" loading="lazy">
+            </div>
+            <figcaption>creator</figcaption>
+          </figure>
+          <figure>
+            <div class="moldura-arco">
+              <img src="sobre-atriz.jpg" alt="Walquíria Meireles caracterizada como palhaça, com maquiagem artística vermelha e branca e capuz vermelho" width="1000" height="1250" loading="lazy">
+            </div>
+            <figcaption>atriz &amp; circense</figcaption>
+          </figure>
         </div>
         <span class="etiqueta" aria-hidden="true">oi, marcas!</span>
+      </div>
       </div>
 
       <div class="sobre-texto revelar" style="--atraso:.1s">
         <span class="script">prazer,</span>
-        <h2 id="titulo-sobre">Sobre mim</h2>
-        <p>Eu sou a Walquíria, moro em Brasília e transformo produtos em pequenas histórias que dá vontade de viver. Gravo como quem conversa com uma amiga: com calma, verdade e aquele cuidado de vitrine bem arrumada.</p>
-        <p>Já entreguei 100 vídeos para mais de 60 marcas de beleza, moda, casa e decoração, pet e tech, e cada um foi feito como se fosse o primeiro. Comigo, você sabe exatamente o que vai receber:</p>
+        <h2 id="titulo-sobre">Eu sou…</h2>
+        <p>Creator nordestina no DF, atriz e circense. Trago toda essa bagagem cênica para o universo do conteúdo, combinando UGC tradicional, storytelling e edições estratégicas.</p>
+        <p>Sou especialista em UGC Canvas, aplicando essa metodologia para estruturar vídeos de alto impacto que geram resultados sólidos e consistentes para as marcas.</p>
+        <p>Com mais de 100 vídeos entregues para +60 marcas (Beleza, Moda, Casa, Pet e Tech), cada produção une interpretação, criatividade e alinhamento estratégico, garantindo segurança do conceito até o resultado final.</p>
+      </div>
+    </div>
+
+    <!-- DOIS QUADRINHOS DO MESMO TAMANHO: Creative skills e o processo -->
+    <div class="conteiner sobre-cartoes">
+      <div class="cartao-sobre skills revelar">
+        <h3>Creative skills</h3>
+        <dl>
+          <dt>Estilos de conteúdo</dt>
+          <dd>UGC tradicional · Conteúdo com linguagem nativa · Abordagens criativas</dd>
+          <dt>Criação e produção</dt>
+          <dd>Storytelling · Interpretação · Edição criativa · Construção de cenas</dd>
+          <dt>Vertentes de atuação</dt>
+          <dd>UGC · UGC Canvas · Influência · Edição de vídeo</dd>
+        </dl>
+      </div>
+      <div class="cartao-sobre processo revelar" style="--atraso:.1s">
+        <h3>Comigo, você recebe</h3>
         <ul class="promessas">
           <li><span class="num" aria-hidden="true">1</span><span><strong>Roteiro aprovado antes de gravar</strong>, para você ver a ideia no papel primeiro.</span></li>
           <li><span class="num" aria-hidden="true">2</span><span><strong>Uma rodada de ajuste inclusa</strong>, sem custo extra.</span></li>
           <li><span class="num" aria-hidden="true">3</span><span><strong>Entrega em até 72 horas úteis</strong> depois da aprovação do roteiro.</span></li>
         </ul>
-        <p class="assinatura">Walquíria Meireles</p>
-        <p class="assinatura-sub">UGC Creator ✦ Brasília</p>
       </div>
+    </div>
+
+    <div class="conteiner sobre-assinatura revelar">
+      <p class="assinatura">Walquíria Meireles</p>
+      <p class="assinatura-sub">UGC Creator ✦ Brasília</p>
     </div>
   </section>
 
@@ -683,20 +747,21 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
        ========================================================= -->
   <section class="secao ugc-canvas" id="ugc-canvas" aria-labelledby="titulo-ugc-canvas">
     <div class="conteiner">
-      <header class="cabeca revelar">
+      <header class="cabeca-videos-canvas primeira revelar">
+        <span class="script">os que mais bombaram</span>
+        <h3>Vídeos em destaque</h3>
+        <div class="ornamento" aria-hidden="true">✦</div>
+      </header>
+      <ul class="videos-canvas" id="videos-canvas"></ul>
+
+      <!-- apresentação do UGC Canvas, logo antes dos perfis -->
+      <header class="cabeca cabeca-perfis revelar">
         <span class="script">minha galeria</span>
         <h2 id="titulo-ugc-canvas">UGC Canvas</h2>
         <p class="intro">Uma seleção dos meus trabalhos de UGC Canvas, criados para marcas que querem conteúdo com cara de gente de verdade.</p>
         <div class="ornamento" aria-hidden="true">✦</div>
       </header>
       <ul class="perfis-grade" id="perfis-grade"></ul>
-
-      <header class="cabeca-videos-canvas revelar">
-        <span class="script">os que mais bombaram</span>
-        <h3>Vídeos em destaque</h3>
-        <div class="ornamento" aria-hidden="true">✦</div>
-      </header>
-      <ul class="videos-canvas" id="videos-canvas"></ul>
     </div>
   </section>
 
@@ -763,6 +828,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
           <li><strong>E-mail:</strong> <a href="mailto:waalmeireles@gmail.com">waalmeireles@gmail.com</a></li>
           <li><strong>WhatsApp:</strong> <a href="https://wa.me/5561991212653" target="_blank" rel="noopener">(61) 99121-2653</a></li>
           <li><strong>Instagram:</strong> <a href="https://instagram.com/euwalmeireles" target="_blank" rel="noopener">@euwalmeireles</a></li>
+          <li><strong>TikTok:</strong> <a href="https://www.tiktok.com/@euwalmeireles" target="_blank" rel="noopener">@euwalmeireles</a></li>
         </ul>
       </div>
 
@@ -804,8 +870,10 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
     <a class="logo" href="#inicio">Walquíria Meireles</a>
     <p>UGC Creator em Brasília ✦ beleza, moda, casa e decoração, pet e tech</p>
     <ul class="redes">
-      <li><a href="https://instagram.com/euwalmeireles" target="_blank" rel="noopener">
+      <li><a href="https://instagram.com/euwalmeireles" target="_blank" rel="noopener" aria-label="Instagram @euwalmeireles" title="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>@euwalmeireles</a></li>
+      <li><a href="https://www.tiktok.com/@euwalmeireles" target="_blank" rel="noopener" aria-label="TikTok @euwalmeireles" title="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.6 2.2 4.4 5 4.6"/></svg>@euwalmeireles</a></li>
       <li><a href="https://wa.me/5561991212653" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7Z"/></svg>WhatsApp</a></li>
       <li><a href="mailto:waalmeireles@gmail.com">
@@ -924,7 +992,7 @@ const VIDEOS_CANVAS = [
 const SERVICOS = [
   { titulo: 'Vídeo UGC', descricao: 'Roteiro, gravação e edição de vídeos verticais com linguagem natural, pensados para Reels, TikTok e Shorts.' },
   { titulo: 'Corte para anúncio', descricao: 'Versões com ganchos diferentes, legendas e duração certinha para testar nas suas campanhas pagas.' },
-  { titulo: 'Fotos do produto', descricao: 'Fotos com luz natural e cenário caprichado, prontas para site, redes sociais e marketplace.' },
+  { titulo: 'UGC Canvas', descricao: 'Um perfil criado e dedicado 100% ao seu produto ou serviço, com conteúdo contínuo que amplia o alcance e gera muito mais resultado para a sua marca.' },
   { titulo: 'Unboxing', descricao: 'A primeira impressão do seu produto contada com emoção, da embalagem ao primeiro uso.' },
   { titulo: 'Publicação no meu perfil', descricao: 'O conteúdo vai ao ar no @euwalmeireles em parceria com a sua marca, falando direto com a minha comunidade.' },
   { titulo: 'Pacote mensal', descricao: 'Uma quantidade fixa de conteúdos por mês, com calendário combinado e condição especial.' }
@@ -1174,6 +1242,7 @@ const DEPOIMENTOS = [
         <span class="servico-num" aria-hidden="true">${doisDigitos(i + 1)}</span>
         <h3>${esc(s.titulo)}</h3>
         <p>${esc(s.descricao)}</p>
+        <div class="ornamento servico-estrela" aria-hidden="true">✦</div>
       </article>
     </li>`).join('');
 
