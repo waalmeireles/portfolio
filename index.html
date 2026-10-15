@@ -497,6 +497,9 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 }
 .depoimento blockquote{margin:0 0 18px;font-style:italic;font-size:1.05rem;position:relative}
 .depoimento figcaption{display:flex;align-items:center;gap:12px;border-top:1px dashed var(--dourado);padding-top:14px}
+/* logo da marca ao lado do nome: círculo com contorno dourado (as logos ficam na pasta logos, já redondas) */
+.logo-depoimento{flex:none;width:48px;height:48px;border-radius:50%;box-shadow:0 0 0 1.5px var(--dourado)}
+.logo-depoimento img{display:block;width:48px;height:48px;border-radius:50%}
 .avatar{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--rosa);color:var(--tinta);font-weight:600}
 .depoimento figcaption strong{display:block;color:var(--verde)}
 .depoimento figcaption span{font-size:.88rem;color:var(--tinta-suave)}
@@ -973,14 +976,16 @@ const SERVICOS = [
 
 
 
-/* DEPOIMENTOS: o que as marcas mandaram (texto, nome da marca e a linha de baixo). */
+/* DEPOIMENTOS: o que as marcas mandaram (texto, nome da marca e a linha de baixo).
+   logo: a logo da marca, já recortada em círculo (pasta logos), que aparece ao lado do nome.
+   Sem logo (logo: ''), aparece um círculo com a inicial. */
 const DEPOIMENTOS = [
-  { nome: 'TIM',    empresa: 'Marca parceira', texto: 'Meu Deus, que lindo! Está com roteiro ótimo, takes inteligentes!' },
-  { nome: 'Magalu', empresa: 'Marca parceira', texto: 'Tá muito bom! Eu amei sua CTA.' },
-  { nome: 'Zello',  empresa: 'Marca parceira', texto: 'Acabei de ver o vídeo! Ficou perfeito! Do jeito que estávamos pensando. Sem alterações.' },
-  { nome: 'Clínica Boss', empresa: 'Marca parceira', texto: 'Vieram bastantes pacientes através de você. Agradecemos o conteúdo, gerou um ótimo retorno e visibilidade.' },
-  { nome: 'Rainoah', empresa: 'Marca parceira', texto: 'Obrigada, Walquíria! Ótimo trabalho, gostamos bastante da edição, gravação e ideias. Esperamos próximas oportunidades de trabalharmos juntos.' },
-  { nome: 'Rainoah', empresa: 'Marca parceira', texto: 'Ótimo conteúdo e ideias, ótima colaboração. Muito obrigada.' }
+  { nome: 'Pangeia',    empresa: 'Marca parceira', logo: 'logos/pangeia.png',    texto: 'Meu Deus, que lindo! Está com roteiro ótimo, takes inteligentes!' },
+  { nome: 'Be Colonia', empresa: 'Marca parceira', logo: 'logos/be-colonia.png', texto: 'Tá muito bom! Eu amei sua CTA.' },
+  { nome: 'Zello',  empresa: 'Marca parceira', logo: 'logos/zello.png', texto: 'Acabei de ver o vídeo! Ficou perfeito! Do jeito que estávamos pensando. Sem alterações.' },
+  { nome: 'Clínica Boss', empresa: 'Marca parceira', logo: 'logos/clinica-boss.png', texto: 'Vieram bastantes pacientes através de você. Agradecemos o conteúdo, gerou um ótimo retorno e visibilidade.' },
+  { nome: 'Rainoah', empresa: 'Marca parceira', logo: 'logos/rainoah.png', texto: 'Obrigada, Walquíria! Ótimo trabalho, gostamos bastante da edição, gravação e ideias. Esperamos próximas oportunidades de trabalharmos juntos.' },
+  { nome: 'Deliriyou', empresa: 'Marca parceira', logo: 'logos/deliriyou-redonda.png', texto: 'Que desempenho maravilhoso em julho, parabéns! Você alcançou resultados incríveis que refletem todo o seu esforço e talento. Estamos muito felizes com a parceria e acreditamos muito no seu potencial!' }
 ];
 
 /* =========================================================
@@ -1213,7 +1218,9 @@ const DEPOIMENTOS = [
       <figure class="depoimento">
         <blockquote><p>${esc(d.texto)}</p></blockquote>
         <figcaption>
-          <span class="avatar" aria-hidden="true">${esc(d.nome.trim().charAt(0))}</span>
+          ${d.logo
+            ? `<span class="logo-depoimento"><img src="${esc(d.logo)}" alt="" loading="lazy"></span>`
+            : `<span class="avatar" aria-hidden="true">${esc(d.nome.trim().charAt(0))}</span>`}
           <span><strong>${esc(d.nome)}</strong><span>${esc(d.empresa)}</span></span>
         </figcaption>
       </figure>
