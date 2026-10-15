@@ -192,11 +192,14 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 .capa .frase{font-size:clamp(1.12rem,2vw,1.32rem);max-width:34ch;margin:1.2em 0 1.8em;color:var(--tinta-suave)}
 .capa .frase strong{color:var(--verde);font-weight:600}
 .numeros-capa{
-  list-style:none;margin:40px 0 0;padding:22px 0 0;
-  /* duas metades iguais, cada número centralizado na sua: fica uniforme sob a linha */
-  display:grid;grid-template-columns:1fr 1fr;text-align:center;
-  border-top:1px solid rgba(201,162,74,.7);
+  list-style:none;margin:18px 0 0;padding:0;
+  /* três partes iguais, cada número centralizado na sua: fica uniforme sob o enfeite */
+  display:grid;grid-template-columns:repeat(3,1fr);text-align:center;
 }
+/* enfeite acima dos números: as mesmas linhas douradas com a estrelinha dos títulos,
+   esticadas para ocupar a largura toda dos números */
+.ornamento-capa{margin:40px 0 0}
+.ornamento-capa::before,.ornamento-capa::after{flex:1;width:auto}
 .numeros-capa li + li{border-left:1px solid rgba(201,162,74,.5)}
 .numeros-capa strong{display:block;font-size:clamp(1.9rem,4vw,2.6rem);color:var(--verde);line-height:1;font-weight:600;font-variant-numeric:tabular-nums}
 .numeros-capa span{font-size:.86rem;color:var(--tinta-suave);display:block;margin-top:.35em;line-height:1.3}
@@ -468,23 +471,15 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 /* =========================================================
    6. NÚMEROS E DEPOIMENTOS
    ========================================================= */
-.numeros{background:var(--verde);color:var(--creme);position:relative;margin-top:24px}
-.numeros::before{
+.secao-depoimentos{background:var(--verde);color:var(--creme);position:relative;margin-top:24px}
+.secao-depoimentos::before{
   content:"";position:absolute;left:0;right:0;top:-24px;height:24px;
   background:radial-gradient(circle at 20px 24px,var(--verde) 19.5px,transparent 20.5px) 0 0/40px 24px repeat-x;
 }
-.metricas{list-style:none;margin:0 0 72px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.metrica{text-align:center;padding:24px 12px;border:1px solid rgba(201,162,74,.6);border-radius:20px;background:rgba(74,51,36,.4)}
-.metrica strong{display:block;font-size:clamp(2.6rem,5vw,3.8rem);line-height:1;font-weight:600;color:var(--creme);font-variation-settings:"SOFT" 100}
-.metrica span{display:block;margin-top:.5em;font-size:.95rem}
-.bloco-rotulo{font-family:var(--manuscrita);font-size:clamp(1.7rem,3.4vw,2.2rem);color:var(--rosa);text-align:center;margin:0 0 24px}
-.resultados{list-style:none;margin:0 0 72px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.resultado{background:var(--creme);color:var(--tinta);border-radius:20px;padding:26px 24px;height:100%;box-shadow:0 0 0 4px var(--verde),0 0 0 5.5px var(--dourado)}
-.resultado strong{display:block;font-size:2.6rem;line-height:1;color:var(--verde);font-weight:600}
-.resultado .rot{display:block;font-weight:600;margin:.4em 0 .6em}
-.resultado p{margin:0;font-size:.93rem;color:var(--tinta-suave)}
-.depoimentos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-.depoimento{margin:0;height:100%;background:var(--creme-claro);color:var(--tinta);border-radius:22px;padding:34px 28px 26px;position:relative}
+.depoimentos{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:22px}
+.depoimentos > li{flex:0 1 calc((100% - 44px) / 3);min-width:260px}
+.depoimento{margin:0;height:100%;background:var(--creme-claro);color:var(--tinta);border-radius:22px;padding:34px 28px 26px;position:relative;display:flex;flex-direction:column}
+.depoimento figcaption{margin-top:auto}
 .depoimento::before{
   content:"\201C";position:absolute;top:-6px;left:22px;font-size:5rem;line-height:1;color:var(--rosa);font-style:italic;
 }
@@ -494,10 +489,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .depoimento figcaption strong{display:block;color:var(--verde)}
 .depoimento figcaption span{font-size:.88rem;color:var(--tinta-suave)}
 @media (max-width:900px){
-  .metricas{gap:10px}
-  .metrica{padding:20px 6px}
-  .resultados{grid-template-columns:1fr}
-  .depoimentos{grid-template-columns:1fr}
+  .depoimentos > li{flex-basis:100%}
 }
 
 /* =========================================================
@@ -603,7 +595,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
         <li><a href="#trabalhos">Trabalhos</a></li>
         <li><a href="#ugc-canvas">UGC Canvas</a></li>
         <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#numeros">Números</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
     </nav>
@@ -624,9 +616,11 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
           <a class="botao botao-vazado" href="#trabalhos">Ver os trabalhos</a>
         </div>
         <!-- Números da capa: para trocar, edite o data-contador (número) ou o texto -->
+        <div class="ornamento ornamento-capa" aria-hidden="true">✦</div>
         <ul class="numeros-capa">
-          <li><strong data-contador="100">100</strong><span>vídeos entregues</span></li>
+          <li><strong data-contador="100" data-prefixo="+">+100</strong><span>vídeos entregues</span></li>
           <li><strong data-contador="60" data-prefixo="+">+60</strong><span>marcas atendidas</span></li>
+          <li><strong data-contador="5">5</strong><span>nichos atendidos</span></li>
         </ul>
       </div>
 
@@ -780,23 +774,17 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
   </section>
 
   <!-- =========================================================
-       6. NÚMEROS E DEPOIMENTOS
+       6. DEPOIMENTOS
        ========================================================= -->
-  <section class="secao numeros escuro" id="numeros" aria-labelledby="titulo-numeros">
+  <section class="secao secao-depoimentos escuro" id="depoimentos" aria-labelledby="titulo-depoimentos">
     <div class="conteiner">
       <header class="cabeca revelar">
         <span class="script">quem já provou, aprovou</span>
-        <h2 id="titulo-numeros">Números e depoimentos</h2>
+        <h2 id="titulo-depoimentos">O que as marcas dizem</h2>
         <div class="ornamento" aria-hidden="true">✦</div>
       </header>
 
-      <ul class="metricas" id="metricas"></ul>
-
-      <p class="bloco-rotulo revelar">resultados de campanha</p>
-      <ul class="resultados" id="resultados"></ul>
-
-      <p class="bloco-rotulo revelar">o que as marcas dizem</p>
-      <ul class="depoimentos" id="depoimentos"></ul>
+      <ul class="depoimentos" id="lista-depoimentos"></ul>
     </div>
   </section>
 
@@ -998,28 +986,16 @@ const SERVICOS = [
   { titulo: 'Pacote mensal', descricao: 'Uma quantidade fixa de conteúdos por mês, com calendário combinado e condição especial.' }
 ];
 
-/* MÉTRICAS com contador animado.
-   numero: o valor que o contador vai animar. prefixo/sufixo: o que aparece antes/depois (ex.: '+').
-   Se ainda não tiver o número, use texto: '...' (sem contador). */
-const METRICAS = [
-  { numero: 100, sufixo: '', rotulo: 'vídeos entregues' },
-  { numero: 60,  prefixo: '+', sufixo: '', rotulo: 'marcas atendidas' },
-  { numero: 5,   sufixo: '', rotulo: 'nichos atendidos' }
-];
 
-/* RESULTADOS DE CAMPANHA: troque os 00 pelos números reais. */
-const RESULTADOS = [
-  { numero: '+00%', rotulo: 'de resultado na campanha', marca: 'Marca 01', contexto: 'Descreva aqui em uma linha o que foi feito e o resultado.' },
-  { numero: '+00K', rotulo: 'views em 7 dias',          marca: 'Marca 02', contexto: 'Descreva aqui em uma linha o que foi feito e o resultado.' },
-  { numero: '00x',  rotulo: 'retorno sobre o anúncio',  marca: 'Marca 03', contexto: 'Descreva aqui em uma linha o que foi feito e o resultado.' }
-];
 
-/* DEPOIMENTOS: cole o texto real que cada cliente mandou. */
+/* DEPOIMENTOS: o que as marcas mandaram (texto, nome da marca e a linha de baixo). */
 const DEPOIMENTOS = [
-  { nome: 'Cliente 01', empresa: 'Nome da empresa', texto: 'Cole aqui o depoimento real da marca. Uma ou duas frases contando como foi trabalhar com você.' },
-  { nome: 'Cliente 02', empresa: 'Nome da empresa', texto: 'Espaço para o depoimento do cliente, de preferência falando do resultado que o conteúdo trouxe.' },
-  { nome: 'Cliente 03', empresa: 'Nome da empresa', texto: 'Espaço para o depoimento do cliente. Vale um elogio sobre prazo, cuidado ou naturalidade do vídeo.' },
-  { nome: 'Cliente 04', empresa: 'Nome da empresa', texto: 'Espaço para o depoimento do cliente. Frases curtas funcionam melhor aqui.' }
+  { nome: 'TIM',    empresa: 'Marca parceira', texto: 'Meu Deus, que lindo! Está com roteiro ótimo, takes inteligentes!' },
+  { nome: 'Magalu', empresa: 'Marca parceira', texto: 'Tá muito bom! Eu amei sua CTA.' },
+  { nome: 'Zello',  empresa: 'Marca parceira', texto: 'Acabei de ver o vídeo! Ficou perfeito! Do jeito que estávamos pensando. Sem alterações.' },
+  { nome: 'Clínica Boss', empresa: 'Marca parceira', texto: 'Vieram bastantes pacientes através de você. Agradecemos o conteúdo, gerou um ótimo retorno e visibilidade.' },
+  { nome: 'Rainoah', empresa: 'Marca parceira', texto: 'Obrigada, Walquíria! Ótimo trabalho, gostamos bastante da edição, gravação e ideias. Esperamos próximas oportunidades de trabalharmos juntos.' },
+  { nome: 'Rainoah', empresa: 'Marca parceira', texto: 'Ótimo conteúdo e ideias, ótima colaboração. Muito obrigada.' }
 ];
 
 /* =========================================================
@@ -1246,27 +1222,9 @@ const DEPOIMENTOS = [
       </article>
     </li>`).join('');
 
-  /* ---------- Métricas, resultados e depoimentos ---------- */
-  $('#metricas').innerHTML = METRICAS.map((m, i) => `
-    <li class="metrica revelar" style="--atraso:${i * 0.1}s">
-      ${typeof m.numero === 'number'
-        ? `<strong data-contador="${m.numero}" data-prefixo="${esc(m.prefixo || '')}" data-sufixo="${esc(m.sufixo || '')}">${esc(m.prefixo || '')}${m.numero}${esc(m.sufixo || '')}</strong>`
-        : `<strong>${esc(m.texto)}</strong>`}
-      <span>${esc(m.rotulo)}</span>
-    </li>`).join('');
-
-  $('#resultados').innerHTML = RESULTADOS.map((r, i) => `
-    <li class="revelar" style="--atraso:${i * 0.1}s">
-      <article class="resultado">
-        <strong>${esc(r.numero)}</strong>
-        <span class="rot">${esc(r.rotulo)}</span>
-        <span class="tag">${esc(r.marca)}</span>
-        <p>${esc(r.contexto)}</p>
-      </article>
-    </li>`).join('');
-
-  $('#depoimentos').innerHTML = DEPOIMENTOS.map((d, i) => `
-    <li class="revelar" style="--atraso:${(i % 2) * 0.1}s">
+  /* ---------- Depoimentos ---------- */
+  $('#lista-depoimentos').innerHTML = DEPOIMENTOS.map((d, i) => `
+    <li class="revelar" style="--atraso:${(i % 3) * 0.1}s">
       <figure class="depoimento">
         <blockquote><p>${esc(d.texto)}</p></blockquote>
         <figcaption>
