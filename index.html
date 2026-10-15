@@ -495,14 +495,14 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 /* =========================================================
    7. BORA CRIAR JUNTOS
    ========================================================= */
-.contato-grade{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,5vw,72px);align-items:start}
+.contato-grade{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,5vw,72px);align-items:center}
 .contato-texto .script{text-align:left}
 .contato-texto h2{font-size:clamp(2.4rem,5.5vw,3.8rem);color:var(--verde);margin-bottom:.4em}
 .contato-texto > p{color:var(--tinta-suave);font-size:1.1rem}
 .contato-botoes{display:grid;gap:12px;margin:28px 0}
 .contato-botoes .botao{justify-content:flex-start}
-.info-lista{list-style:none;padding:0;margin:0;font-size:.95rem;color:var(--tinta-suave)}
-.info-lista li{padding:.35em 0}
+/* contatos soltos embaixo da foto, centralizados com a moldura e com espaçamento igual */
+.info-lista{list-style:none;padding:0;margin:28px 0 0;text-align:center;font-size:.98rem;color:var(--tinta-suave);display:grid;gap:8px}
 .info-lista strong{color:var(--verde)}
 .info-lista a{color:inherit;text-decoration:none;transition:color .2s ease}
 .info-lista a:hover{color:var(--rosa)}
@@ -527,28 +527,14 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
   transition:opacity .3s ease,transform .3s ease,visibility .3s;max-width:calc(100vw - 32px);text-align:center;
 }
 .aviso-copiado.mostra{opacity:1;visibility:visible;transform:translate(-50%,0)}
-.cartao-form{
-  background:var(--creme-claro);border:1.5px solid var(--dourado);border-radius:26px;
-  padding:clamp(24px,4vw,40px);box-shadow:var(--sombra);position:relative;
+/* foto do contato: a mesma moldura em arco da capa, com a estrelinha dourada */
+.contato-foto{max-width:420px;width:100%;justify-self:center}
+.contato-moldura{position:relative}
+.contato-foto .moldura-arco img{object-position:50% 20%}
+@media (max-width:860px){
+  .contato-grade{grid-template-columns:1fr}
+  .contato-foto{max-width:380px}
 }
-.cartao-form::before{
-  content:"";position:absolute;inset:8px;border:1px solid rgba(201,162,74,.5);border-radius:20px;pointer-events:none;
-}
-.campo{display:grid;gap:6px;margin-bottom:18px;position:relative}
-.campo label{font-weight:600;font-size:.95rem;color:var(--verde)}
-.campo input,.campo textarea{
-  width:100%;padding:.85em 1em;border-radius:12px;border:1.5px solid #cdbf98;background:#fff;
-  transition:border-color .2s ease, box-shadow .2s ease;
-}
-.campo textarea{min-height:140px;resize:vertical}
-.campo input:focus,.campo textarea:focus{outline:none;border-color:var(--verde);box-shadow:0 0 0 4px rgba(111,78,55,.18)}
-.cartao-form .botao{width:100%;position:relative}
-.confirmacao{
-  text-align:center;padding:24px 8px;position:relative;
-}
-.confirmacao .script{font-size:2.4rem}
-.confirmacao h3{font-size:1.6rem;color:var(--verde);margin:.3em 0 .5em}
-@media (max-width:860px){.contato-grade{grid-template-columns:1fr}}
 
 /* =========================================================
    8. RODAPÉ
@@ -811,6 +797,17 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
             Ver o Instagram
           </a>
         </div>
+      </div>
+
+      <!-- FOTO DO CONTATO: arquivo contato.jpg, na mesma moldura em arco do site -->
+      <div class="contato-foto revelar" style="--atraso:.1s">
+        <div class="contato-moldura">
+          <div class="moldura-arco">
+            <img src="contato.jpg" alt="Walquíria Meireles sorrindo, sentada numa cadeira branca, de camiseta branca e calça laranja" width="1000" height="1250" loading="lazy">
+          </div>
+          <span class="estrela-deco" aria-hidden="true">✦</span>
+        </div>
+        <!-- dados de contato, soltos e centralizados embaixo da foto -->
         <ul class="info-lista">
           <li><strong>Cidade:</strong> Brasília, DF</li>
           <li><strong>E-mail:</strong> <a href="mailto:waalmeireles@gmail.com">waalmeireles@gmail.com</a></li>
@@ -818,33 +815,6 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
           <li><strong>Instagram:</strong> <a href="https://instagram.com/euwalmeireles" target="_blank" rel="noopener">@euwalmeireles</a></li>
           <li><strong>TikTok:</strong> <a href="https://www.tiktok.com/@euwalmeireles" target="_blank" rel="noopener">@euwalmeireles</a></li>
         </ul>
-      </div>
-
-      <div class="cartao-form revelar" style="--atraso:.1s">
-        <!-- O formulário mostra a confirmação na tela. Para receber as mensagens de verdade,
-             conecte a um serviço de formulários (por exemplo Formspree) colocando o endereço
-             dele no atributo action e trocando a parte "ENVIO" no script. -->
-        <form id="form-contato" novalidate>
-          <div class="campo">
-            <label for="nome">Seu nome</label>
-            <input id="nome" name="nome" type="text" autocomplete="name" required placeholder="Como posso te chamar?">
-          </div>
-          <div class="campo">
-            <label for="email">Seu e-mail</label>
-            <input id="email" name="email" type="email" autocomplete="email" required placeholder="voce@suamarca.com.br">
-          </div>
-          <div class="campo">
-            <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" required placeholder="Conte sobre a marca, o produto e o que você imagina"></textarea>
-          </div>
-          <button class="botao botao-cheio" type="submit">Enviar mensagem</button>
-        </form>
-        <div class="confirmacao" id="confirmacao" hidden tabindex="-1" aria-live="polite">
-          <span class="script">obrigada!</span>
-          <h3 id="confirmacao-titulo">Mensagem recebida</h3>
-          <p id="confirmacao-texto">Eu respondo em breve, com todo carinho.</p>
-          <button class="botao botao-vazado" type="button" id="nova-mensagem">Enviar outra mensagem</button>
-        </div>
       </div>
     </div>
   </section>
@@ -1324,27 +1294,6 @@ const DEPOIMENTOS = [
     }, { rootMargin: '-45% 0px -50% 0px' });
     document.querySelectorAll('main section[id]').forEach((s) => obsSecao.observe(s));
   }
-
-  /* ---------- Formulário de contato ---------- */
-  const form = $('#form-contato');
-  const conf = $('#confirmacao');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    const nome = form.nome.value.trim().split(' ')[0];
-    /* ENVIO: aqui entraria o envio para o seu serviço de formulários */
-    $('#confirmacao-titulo').textContent = `Mensagem recebida, ${nome}!`;
-    $('#confirmacao-texto').textContent = 'Obrigada pelo contato. Eu respondo no seu e-mail em breve, com todo carinho.';
-    form.hidden = true;
-    conf.hidden = false;
-    conf.focus();
-  });
-  $('#nova-mensagem').addEventListener('click', () => {
-    form.reset();
-    conf.hidden = true;
-    form.hidden = false;
-    form.nome.focus();
-  });
 
   /* ---------- E-mail: além de abrir o app de e-mail, copia o endereço ----------
      (se a pessoa não tiver app de e-mail configurado, o link sozinho não faz nada) */
