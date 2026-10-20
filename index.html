@@ -924,7 +924,9 @@ const NICHOS = [
 
 /* TRABALHOS: vídeos do YouTube que tocam no próprio site.
    nicho: um dos ids acima. nome: o que aparece embaixo do vídeo.
-   video: só o código do Short (o que vem depois de /shorts/ no link, sem o ?feature=share). */
+   video: só o código do Short (o que vem depois de /shorts/ no link, sem o ?feature=share).
+   A capa de cada vídeo fica na pasta "capas-nichos", com o código do vídeo como nome (ex.: CP-JMoZuXYU.jpg).
+   Se não tiver capa lá, o site usa a do YouTube. */
 const TRABALHOS = [
   { nicho: 'pet',    nome: 'Zello',                  video: 'fakajTL3QMs' },
   { nicho: 'pet',    nome: 'Caminha pet',            video: 'VvM_MS2WxFU' },
@@ -978,17 +980,19 @@ const PERFIS_CANVAS = [
 
 /* VÍDEOS EM DESTAQUE DO UGC CANVAS: os arquivos ficam na pasta "videos-canvas".
    video: o arquivo .mp4. capa: a imagem que aparece antes de tocar.
-   views: o número em destaque. perfil e rede: aparecem embaixo do número.
-   A ordem desta lista é a ordem no site (hoje: do mais visto para o menos visto). */
+   views: o número de views, só com algarismos (ex.: 982800). O site escreve "982,8 mil" sozinho.
+   perfil e rede: aparecem embaixo do número.
+   O site põe sozinho em ordem, do mais visto para o menos visto.
+   Views conferidas em 19/10/2026 (TikTok); as do Instagram são as que você passou antes. */
 const VIDEOS_CANVAS = [
-  { video: 'videos-canvas/DcTdIqgIWLi.mp4',                capa: 'videos-canvas/DcTdIqgIWLi.jpg',                views: '1,1 milhão', perfil: '@wal.achados',        rede: 'Instagram' },
-  { video: 'videos-canvas/tiktok-7618574401759448341.mp4', capa: 'videos-canvas/tiktok-7618574401759448341.jpg', views: '982,6 mil',  perfil: '@perfilportfoliougc', rede: 'TikTok' },
-  { video: 'videos-canvas/DZLhwyOoJT4.mp4',                capa: 'videos-canvas/DZLhwyOoJT4.jpg',                views: '935 mil',    perfil: '@perfilportfoliougc', rede: 'Instagram' },
-  { video: 'videos-canvas/DdZFyd6IjBX.mp4',                capa: 'videos-canvas/DdZFyd6IjBX.jpg',                views: '832 mil',    perfil: '@wal.achados',        rede: 'Instagram' },
-  { video: 'videos-canvas/DcBeGgchHFZ.mp4',                capa: 'videos-canvas/DcBeGgchHFZ.jpg',                views: '725 mil',    perfil: '@wal.achados',        rede: 'Instagram' },
-  { video: 'videos-canvas/tiktok-7628332351843503381.mp4', capa: 'videos-canvas/tiktok-7628332351843503381.jpg', views: '324,5 mil',  perfil: '@perfilportfoliougc', rede: 'TikTok' },
-  { video: 'videos-canvas/tiktok-7695817645840452884.mp4', capa: 'videos-canvas/tiktok-7695817645840452884.jpg', views: '85,7 mil',   perfil: '@wal.sentiments',     rede: 'TikTok' },
-  { video: 'videos-canvas/DYS7LdVvsQ1.mp4',                capa: 'videos-canvas/DYS7LdVvsQ1.jpg',                views: '78,6 mil',   perfil: '@waledita',           rede: 'Instagram' }
+  { video: 'videos-canvas/DcTdIqgIWLi.mp4',                capa: 'videos-canvas/DcTdIqgIWLi.jpg',                views: 1100000, perfil: '@wal.achados',        rede: 'Instagram' },
+  { video: 'videos-canvas/tiktok-7618574401759448341.mp4', capa: 'videos-canvas/tiktok-7618574401759448341.jpg', views: 982800,  perfil: '@perfilportfoliougc', rede: 'TikTok' },
+  { video: 'videos-canvas/DZLhwyOoJT4.mp4',                capa: 'videos-canvas/DZLhwyOoJT4.jpg',                views: 935000,  perfil: '@perfilportfoliougc', rede: 'Instagram' },
+  { video: 'videos-canvas/DdZFyd6IjBX.mp4',                capa: 'videos-canvas/DdZFyd6IjBX.jpg',                views: 832000,  perfil: '@wal.achados',        rede: 'Instagram' },
+  { video: 'videos-canvas/DcBeGgchHFZ.mp4',                capa: 'videos-canvas/DcBeGgchHFZ.jpg',                views: 725000,  perfil: '@wal.achados',        rede: 'Instagram' },
+  { video: 'videos-canvas/tiktok-7628332351843503381.mp4', capa: 'videos-canvas/tiktok-7628332351843503381.jpg', views: 324800,  perfil: '@perfilportfoliougc', rede: 'TikTok' },
+  { video: 'videos-canvas/tiktok-7695817645840452884.mp4', capa: 'videos-canvas/tiktok-7695817645840452884.jpg', views: 105900,  perfil: '@wal.sentiments',     rede: 'TikTok' },
+  { video: 'videos-canvas/DYS7LdVvsQ1.mp4',                capa: 'videos-canvas/DYS7LdVvsQ1.jpg',                views: 78600,   perfil: '@waledita',           rede: 'Instagram' }
 ];
 
 /* SERVIÇOS: número, título e descrição curta. */
@@ -1062,7 +1066,7 @@ const DEPOIMENTOS = [
       <article class="trabalho">
         <div class="ph ph-video">
           <button type="button" class="tocar-video" data-video="${esc(t.video)}" aria-label="Assistir ao vídeo ${esc(t.nome)}, nicho ${esc(nichoNome(t.nicho))}">
-            <img src="https://i.ytimg.com/vi/${esc(t.video)}/hqdefault.jpg" alt="" loading="lazy">
+            <img src="capas-nichos/${esc(t.video)}.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${esc(t.video)}/oardefault.jpg'">
             <span class="icone-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
           </button>
         </div>
@@ -1190,17 +1194,25 @@ const DEPOIMENTOS = [
      Mesmo jeito dos vídeos por nicho: com o mouse começa sem som e pausa ao sair;
      clicando no play (ou no celular) toca com som e mostra os controles. */
   const gradeCanvas = $('#videos-canvas');
-  gradeCanvas.innerHTML = VIDEOS_CANVAS.map((v, i) => `
+  /* 1100000 vira "1,1 milhão", 982800 vira "982,8 mil" */
+  const formataViews = (n) => {
+    const curto = (x) => x.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+    if (n >= 1e6) return `${curto(n / 1e6)} ${n >= 2e6 ? 'milhões' : 'milhão'}`;
+    if (n >= 1e3) return `${curto(n / 1e3)} mil`;
+    return String(n);
+  };
+  const videosCanvas = [...VIDEOS_CANVAS].sort((a, b) => b.views - a.views);
+  gradeCanvas.innerHTML = videosCanvas.map((v, i) => `
     <li class="revelar" style="--atraso:${(i % 4) * 0.1}s">
       <article class="trabalho video-canvas">
         <div class="ph ph-video">
           <video src="${esc(v.video)}" poster="${esc(v.capa)}" preload="none" playsinline loop></video>
-          <button type="button" class="tocar-video" aria-label="Assistir ao vídeo de ${esc(v.perfil)} no ${esc(v.rede)}, ${esc(v.views)} de views">
+          <button type="button" class="tocar-video" aria-label="Assistir ao vídeo de ${esc(v.perfil)} no ${esc(v.rede)}, ${esc(formataViews(v.views))} de views">
             <span class="icone-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
           </button>
         </div>
         <div class="video-canvas-info">
-          <span class="video-canvas-views">${esc(v.views)}</span>
+          <span class="video-canvas-views">${esc(formataViews(v.views))}</span>
           <span class="video-canvas-rotulo">de views</span>
           <span class="video-canvas-perfil">${esc(v.perfil)} · ${esc(v.rede)}</span>
         </div>
