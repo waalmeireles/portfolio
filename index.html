@@ -348,11 +348,28 @@ section{scroll-margin-top:calc(var(--topo) + 8px)}
 .filtro-atalho:hover{background:var(--rosa);color:var(--creme-claro)}
 .bloco-nicho + .bloco-nicho{margin-top:56px}
 .bloco-nicho.sumindo{display:none}
+/* títulos dos nichos: nome numa pílula laranja com sombra de adesivo e estrelinha dourada,
+   contagem numa bolinha marrom e uma linha laranja que some até o fim */
 .titulo-nicho{
-  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
-  font-size:clamp(1.4rem,2.6vw,1.8rem);margin:0 0 18px;color:var(--verde);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-size:clamp(1.3rem,2.6vw,1.7rem);margin:0 0 22px;color:var(--verde);
 }
-.titulo-nicho small{font-family:var(--texto);font-size:.85rem;font-weight:500;color:var(--tinta-suave)}
+.titulo-nicho::after{content:"";flex:1 1 40px;min-width:40px;height:1.5px;background:linear-gradient(90deg,var(--rosa),transparent)}
+.titulo-nicho-selo{
+  display:inline-flex;align-items:center;gap:.45em;padding:.3em 1em .36em .85em;
+  border:2px solid var(--rosa);border-radius:999px;background:var(--creme-claro);
+  box-shadow:5px 5px 0 var(--rosa-claro);
+}
+.titulo-nicho-estrela{display:inline-block;color:var(--dourado);font-size:.7em;line-height:1}
+.titulo-nicho small{
+  font-family:var(--texto);font-size:.8rem;font-weight:600;letter-spacing:.02em;
+  background:var(--verde);color:var(--creme-claro);border-radius:999px;padding:.3em .85em;
+}
+@media (prefers-reduced-motion:no-preference){
+  .titulo-nicho-estrela{animation:brilha 2.8s ease-in-out infinite}
+  .bloco-nicho:hover .titulo-nicho-estrela{animation:girar 1.2s ease-in-out infinite}
+}
+@keyframes brilha{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.7) rotate(45deg);opacity:.6}}
 .carrossel{position:relative}
 .trabalhos-grade{
   display:flex;align-items:flex-start;gap:24px;list-style:none;margin:0;padding:6px 4px 18px;
@@ -940,7 +957,11 @@ const TRABALHOS = [
   { nicho: 'moda',   nome: 'Pijama Julia Gontijo',   video: 'Jc1suxVcuIM' },
   { nicho: 'moda',   nome: 'Pangeia',                video: 'huw3lz7NjRM' },
 
-  { nicho: 'casa',   nome: 'Coala',                  video: 'l8UiAcPKpV0' }
+  { nicho: 'casa',   nome: 'Coala',                  video: 'l8UiAcPKpV0' },
+  { nicho: 'casa',   nome: 'Coala',                  video: 'TMEBFepWNY4' },
+  { nicho: 'casa',   nome: 'Coala',                  video: 'awSD6Y6rG5U' },
+  { nicho: 'casa',   nome: 'Coala',                  video: 'P3SWyk5fsws' },
+  { nicho: 'casa',   nome: 'Magalu',                 video: 'CT_85V7liCs' }
 ];
 
 /* PERFIS DE UGC CANVAS: cada linha vira um cartão clicável.
@@ -1063,7 +1084,7 @@ const DEPOIMENTOS = [
     if (!videos.length) return '';
     return `
       <div class="bloco-nicho revelar" data-nicho="${esc(n.id)}">
-        <h3 class="titulo-nicho" id="nicho-${esc(n.id)}">${esc(n.nome)} <small>${videos.length} ${videos.length === 1 ? 'vídeo' : 'vídeos'}</small></h3>
+        <h3 class="titulo-nicho" id="nicho-${esc(n.id)}"><span class="titulo-nicho-selo"><span class="titulo-nicho-estrela" aria-hidden="true">✦</span>${esc(n.nome)}</span> <small>${videos.length} ${videos.length === 1 ? 'vídeo' : 'vídeos'}</small></h3>
         <div class="carrossel">
           ${seta(-1)}
           <ul class="trabalhos-grade" aria-labelledby="nicho-${esc(n.id)}">${videos.map(cartaoVideo).join('')}</ul>
