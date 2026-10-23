@@ -486,6 +486,57 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .cabeca-videos-canvas h3{font-size:clamp(1.8rem,3.6vw,2.4rem);color:var(--verde)}
 .videos-canvas{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:22px}
 .videos-canvas > li{flex:0 1 250px;min-width:220px}
+/* =========================================================
+   4a. GALERIA DE FOTOS: colunas desencontradas, fotos levemente giradas
+   ========================================================= */
+.galeria{display:flex;gap:clamp(14px,2.2vw,28px);align-items:flex-start;padding-bottom:24px}
+.galeria-coluna{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:clamp(18px,2.6vw,34px)}
+.galeria-coluna:nth-child(2){margin-top:clamp(40px,6vw,84px)}
+.galeria-coluna:nth-child(3){margin-top:clamp(12px,2vw,24px)}
+.galeria-coluna:nth-child(4){margin-top:clamp(56px,8vw,120px)}
+.foto-galeria{
+  position:relative;display:block;width:100%;padding:8px;cursor:var(--cursor-mao);
+  background:var(--creme-claro);border:1px solid rgba(210,105,30,.65);border-radius:20px;
+  box-shadow:var(--sombra);transform:rotate(var(--giro,0deg));
+  transition:transform .35s ease, box-shadow .35s ease;
+}
+.foto-galeria img{display:block;width:100%;height:auto;aspect-ratio:var(--formato,3/4);object-fit:cover;border-radius:14px}
+.foto-galeria:hover,.foto-galeria:focus-visible{transform:rotate(0deg) translateY(-6px) scale(1.02);box-shadow:0 26px 50px -24px rgba(74,51,36,.6);z-index:1}
+.foto-galeria:focus-visible{outline:3px solid var(--dourado);outline-offset:4px}
+/* fitinha dourada colando algumas fotos, como num mural */
+.foto-galeria.com-fita::before{
+  content:"";position:absolute;top:-11px;left:50%;width:76px;height:22px;z-index:1;
+  transform:translateX(-50%) rotate(calc(var(--giro,0deg) * -2 - 3deg));
+  background:rgba(201,162,74,.55);border-left:2px dashed rgba(251,247,234,.7);border-right:2px dashed rgba(251,247,234,.7);
+}
+@media (max-width:860px){
+  .galeria-coluna:nth-child(2){margin-top:48px}
+  .foto-galeria{padding:6px;border-radius:16px}
+  .foto-galeria img{border-radius:11px}
+  .foto-galeria.com-fita::before{width:56px;height:18px;top:-9px}
+}
+/* foto ampliada ao clicar */
+.foto-ampliada{
+  border:0;padding:0;background:transparent;max-width:min(92vw,620px);width:100%;overflow:visible;
+}
+.foto-ampliada::backdrop{background:rgba(43,30,22,.82)}
+.foto-ampliada figure{margin:0;background:var(--creme-claro);padding:10px;border-radius:22px;border:1px solid var(--rosa)}
+.foto-ampliada img{display:block;width:100%;height:auto;max-height:82vh;object-fit:contain;border-radius:14px}
+.foto-ampliada .fechar,.foto-ampliada .passar{
+  position:absolute;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--rosa);
+  background:var(--creme-claro);color:var(--verde);font-size:1.3rem;line-height:1;cursor:var(--cursor-mao);
+  display:grid;place-items:center;box-shadow:var(--sombra);
+}
+.foto-ampliada .fechar{top:-14px;right:-14px}
+.foto-ampliada .passar{top:50%;transform:translateY(-50%)}
+.foto-ampliada .anterior{left:-22px}
+.foto-ampliada .proxima{right:-22px}
+@media (max-width:700px){
+  .foto-ampliada .anterior{left:4px}
+  .foto-ampliada .proxima{right:4px}
+  .foto-ampliada .fechar{right:4px;top:-52px}
+}
+
 /* os cartões usam o mesmo estilo dos vídeos por nicho (.trabalho, .ph-video) */
 .ph-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--verde-escuro)}
 .video-canvas-info{padding:16px 18px 20px;text-align:center}
@@ -626,6 +677,7 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
       <ul>
         <li><a href="#sobre">Eu sou</a></li>
         <li><a href="#trabalhos">Nichos</a></li>
+        <li><a href="#galeria">Fotos</a></li>
         <li><a href="#ugc-canvas">UGC Canvas</a></li>
         <li><a href="#servicos">Serviços</a></li>
         <li><a href="#depoimentos">Depoimentos</a></li>
@@ -771,6 +823,27 @@ a.trabalho:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
       <!-- um carrossel por nicho, montado a partir da lista TRABALHOS lá embaixo -->
       <div id="blocos-nichos"></div>
     </div>
+  </section>
+
+  <!-- =========================================================
+       4a. GALERIA DE FOTOS (lista FOTOS lá embaixo)
+       ========================================================= -->
+  <section class="secao" id="galeria" aria-labelledby="titulo-galeria">
+    <div class="conteiner">
+      <header class="cabeca revelar">
+        <span class="script">em fotos</span>
+        <h2 id="titulo-galeria">Galeria de fotos</h2>
+        <p class="intro">Fotos com produto que eu crio para as marcas: naturais, criativas e com cara de gente de verdade.</p>
+        <div class="ornamento" aria-hidden="true">✦</div>
+      </header>
+      <div class="galeria" id="galeria-fotos"></div>
+    </div>
+    <dialog class="foto-ampliada" id="foto-ampliada" aria-label="Foto ampliada">
+      <figure><img src="" alt=""></figure>
+      <button type="button" class="passar anterior" aria-label="Foto anterior">‹</button>
+      <button type="button" class="passar proxima" aria-label="Próxima foto">›</button>
+      <button type="button" class="fechar" aria-label="Fechar foto">×</button>
+    </dialog>
   </section>
 
   <!-- =========================================================
@@ -994,6 +1067,29 @@ const TRABALHOS = [
   { nicho: 'casa',   nome: 'Magalu',                 video: 'JOxh4wKRQxY' }
 ];
 
+/* FOTOS DA GALERIA: aparecem espalhadas em colunas, nesta ordem (da esquerda para a direita).
+   arquivo: a foto dentro da pasta "galeria". descricao: o que aparece na foto (para leitores de tela).
+   formato: o recorte da foto: '3/4', '4/5' ou '2/3' (alternar deixa a galeria mais solta).
+   posicao: qual parte da foto fica visível no recorte (opcional, ex.: '50% 20%' mostra mais o topo). */
+const FOTOS = [
+  { arquivo: '01.jpg', formato: '2/3', descricao: 'Walquíria segurando a paleta e o iluminador Wonder da Ruby Rose na frente do rosto, sorrindo' },
+  { arquivo: '02.jpg', formato: '4/5', descricao: 'Walquíria com o perfume Be Verde Escuro na frente do rosto' },
+  { arquivo: '03.jpg', formato: '3/4', descricao: 'Walquíria com o gel de limpeza e o hidratante facial Monange' },
+  { arquivo: '04.jpg', formato: '2/3', descricao: 'Walquíria de body preto e short jeans, com as mãos na cabeça', posicao: '50% 30%' },
+  { arquivo: '05.jpg', formato: '3/4', descricao: 'Walquíria equilibrando o shampoo Lisos & Soltos da Muriel na cabeça' },
+  { arquivo: '06.jpg', formato: '4/5', descricao: 'Walquíria na piscina com os protetores solares Cenoura & Bronze', posicao: '50% 70%' },
+  { arquivo: '07.jpg', formato: '3/4', descricao: 'Walquíria piscando, com o protetor em bastão Avon Renew na testa', posicao: '50% 40%' },
+  { arquivo: '08.jpg', formato: '4/5', descricao: 'Walquíria entre o shampoo e o condicionador Seda Ceramidas', posicao: '50% 40%' },
+  { arquivo: '09.jpg', formato: '3/4', descricao: 'Mão segurando três sachês de Churu da Inaba enquanto dois gatos cheiram' },
+  { arquivo: '10.jpg', formato: '4/5', descricao: 'Walquíria pingando o Sérum Egípcio da Da Terra no rosto', posicao: '50% 30%' },
+  { arquivo: '11.jpg', formato: '2/3', descricao: 'Walquíria de cropped e saia longa pretos ao lado de uma ilustração dela no mesmo look' },
+  { arquivo: '12.jpg', formato: '3/4', descricao: 'Walquíria sorrindo atrás da paleta e do gloss Wonder da Ruby Rose' },
+  { arquivo: '13.jpg', formato: '4/5', descricao: 'Walquíria ao fundo, desfocada, segurando o Óleo Extraordinário Elseve da L’Oréal em primeiro plano' },
+  { arquivo: '14.jpg', formato: '3/4', descricao: 'Walquíria com a máscara Lisos & Soltos da Muriel perto do rosto', posicao: '50% 40%' },
+  { arquivo: '15.jpg', formato: '4/5', descricao: 'Walquíria de perfil usando uma máscara facial de tecido', posicao: '50% 30%' },
+  { arquivo: '16.jpg', formato: '2/3', descricao: 'Walquíria sorrindo de olhos fechados com o Sérum Egípcio da Da Terra no queixo' }
+];
+
 /* PERFIS DE UGC CANVAS: cada linha vira um cartão clicável.
    perfil: o @ ou nome do perfil. persona: para que é o perfil (ex.: 'Estudante').
    link: o endereço completo do perfil. foto: caminho de uma foto (deixe '' para mostrar a inicial).
@@ -1003,6 +1099,7 @@ const PERFIS_CANVAS = [
   { perfil: '@datingbywal',         persona: 'Relacionamento',          link: 'https://www.instagram.com/datingbywal/',         foto: 'perfis/datingbywal.jpg' },
   { perfil: '@wal.sentiments',      persona: 'Espiritualidade',         link: 'https://www.instagram.com/wal.sentiments/',      foto: 'perfis/wal.sentiments.jpg' },
   { perfil: '@perfilportfoliougc',  persona: 'Estudos',                 link: 'https://www.instagram.com/perfilportfoliougc/',  foto: 'perfis/perfilportfoliougc.jpg' },
+  { perfil: '@wal.estuda',          persona: 'Estudos',                 link: 'https://www.instagram.com/wal.estuda/',          foto: 'perfis/wal.estuda.jpg' },
   { perfil: '@wal.achados',         persona: 'Achadinhos e promoções',  link: 'https://www.instagram.com/wal.achados/',         foto: 'perfis/wal.achados.jpg' }
 ];
 
@@ -1199,6 +1296,55 @@ const DEPOIMENTOS = [
     blocosNichos.querySelectorAll('.trabalhos-grade').forEach((g) => g.scrollTo({ left: 0 }));
     atualizaSetas();
     $('#aviso-filtro').textContent = `${total} ${total === 1 ? 'vídeo' : 'vídeos'} em ${botao.textContent}`;
+  });
+
+  /* ---------- Galeria de fotos ----------
+     As fotos são distribuídas em 4 colunas (2 no celular), uma para cada coluna em sequência,
+     com um giro pequeno diferente em cada uma. */
+  const galeria = $('#galeria-fotos');
+  const giros = [-2.2, 1.6, -1, 2.4, -1.8, 1.1, 2, -2.6, 0.8, -1.4];
+  const telaEstreita = window.matchMedia('(max-width: 860px)');
+  let galeriaJaApareceu = false;
+  const montaGaleria = () => {
+    const nCol = telaEstreita.matches ? 2 : 4;
+    const colunas = Array.from({ length: nCol }, () => []);
+    FOTOS.forEach((f, i) => {
+      const estilo = `--giro:${giros[i % giros.length]}deg;--formato:${esc(f.formato || '3/4')}`;
+      colunas[i % nCol].push(`
+        <div class="${galeriaJaApareceu ? '' : 'revelar'}" style="--atraso:${(i % nCol) * 0.08}s">
+          <button type="button" class="foto-galeria${i % 3 === 1 ? ' com-fita' : ''}" data-indice="${i}"
+                  style="${estilo}" aria-label="Ampliar foto: ${esc(f.descricao)}">
+            <img src="galeria/${esc(f.arquivo)}" alt="" loading="lazy" width="900" height="1200"
+                 ${f.posicao ? `style="object-position:${esc(f.posicao)}"` : ''}>
+          </button>
+        </div>`);
+    });
+    galeria.innerHTML = colunas.map((c) => `<div class="galeria-coluna">${c.join('')}</div>`).join('');
+  };
+  montaGaleria();
+  telaEstreita.addEventListener('change', () => { galeriaJaApareceu = true; montaGaleria(); });
+
+  const ampliada = $('#foto-ampliada');
+  const imgAmpliada = $('img', ampliada);
+  let fotoAtual = 0;
+  const mostraFoto = (i) => {
+    fotoAtual = (i + FOTOS.length) % FOTOS.length;
+    imgAmpliada.src = 'galeria/' + FOTOS[fotoAtual].arquivo;
+    imgAmpliada.alt = FOTOS[fotoAtual].descricao;
+  };
+  galeria.addEventListener('click', (e) => {
+    const botao = e.target.closest('.foto-galeria');
+    if (!botao || typeof ampliada.showModal !== 'function') return;
+    mostraFoto(Number(botao.dataset.indice));
+    ampliada.showModal();
+  });
+  $('.anterior', ampliada).addEventListener('click', () => mostraFoto(fotoAtual - 1));
+  $('.proxima', ampliada).addEventListener('click', () => mostraFoto(fotoAtual + 1));
+  $('.fechar', ampliada).addEventListener('click', () => ampliada.close());
+  ampliada.addEventListener('click', (e) => { if (e.target === ampliada) ampliada.close(); });
+  ampliada.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') mostraFoto(fotoAtual - 1);
+    if (e.key === 'ArrowRight') mostraFoto(fotoAtual + 1);
   });
 
   /* ---------- UGC Canvas: perfis ---------- */
